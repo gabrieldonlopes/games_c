@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <SDL2/SDL.h>
 #include <math.h>
+#include "graph.h"
+#include "game.h"
 
 /* 
 --------------------------------------------------------
@@ -12,9 +14,6 @@
 # Data: 
 --------------------------------------------------------
 */
-
-#define WIDTH 600
-#define HEIGHT 600
 
 const int background_color[3] = {207, 233, 250};
 const int cell_color[2][3] = {{209, 199, 182},{122, 90, 34}};
@@ -41,7 +40,7 @@ int setupWindow(SDL_Window** window,SDL_Renderer** renderer){
     return 0;
 }
 
-void drawBoard(SDL_Renderer** renderer){
+void drawBoard(SDL_Renderer* renderer,Cell cell[8][8]){
     int margin = 40;
     int thickness = 2;
 
@@ -49,45 +48,50 @@ void drawBoard(SDL_Renderer** renderer){
     int cell_size = board_size / 8;
 
     // background
-    SDL_SetRenderDrawColor(*renderer,
+    SDL_SetRenderDrawColor(renderer,
         background_color[0],
         background_color[1],
         background_color[2],
         255
     );
-    SDL_RenderClear(*renderer);
+    SDL_RenderClear(renderer);
 
     // pintando casas
     for (int row = 0; row < 8; row++){
         for (int col = 0; col < 8; col++){
             if (row%2==0&&col%2==0||row%2!=0&&col%2!=0){
-                SDL_SetRenderDrawColor(*renderer, // casas brancas
+                SDL_SetRenderDrawColor(renderer, // casas brancas
                 cell_color[0][0],
                 cell_color[0][1],
                 cell_color[0][2],
                 255
                 );
             } else {
-                SDL_SetRenderDrawColor(*renderer, // casas pretas
+                SDL_SetRenderDrawColor(renderer, // casas pretas
                 cell_color[1][0],
                 cell_color[1][1],
                 cell_color[1][2],
                 255
                 ); 
             }
-            SDL_Rect cell = {
+            SDL_Rect cell_rect = {
                 (margin + 1) + col * cell_size,
                 (margin + 1) + row * cell_size,
                 cell_size - 1,
                 cell_size - 1,
             };
 
-            SDL_RenderFillRect(*renderer, &cell);
+            // adicionar celula ao board
+            cell[row][col].cx = cell_rect.x + cell_rect.w / 2;
+            cell[row][col].cy = cell_rect.y + cell_rect.h / 2;
+            
+            SDL_RenderFillRect(renderer, &cell_rect);
+            drawCenter(renderer, cell[row][col].cx, cell[row][col].cy);
         }
     }
 
     // cor das linhas
-    SDL_SetRenderDrawColor(*renderer, 0, 0, 0, 255); // preto
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // preto
 
     // borda externa
     SDL_Rect border = {
@@ -96,24 +100,36 @@ void drawBoard(SDL_Renderer** renderer){
         board_size,
         board_size
     };
-    SDL_RenderDrawRect(*renderer, &border);
+    SDL_RenderDrawRect(renderer, &border);
 
     // linhas internas (verticais + horizontais)
     for (int i = 1; i < 8; i++){
         int offset = i * cell_size;
 
         // verticais
-        SDL_RenderDrawLine(*renderer,
+        SDL_RenderDrawLine(renderer,
             margin + offset, margin,
             margin + offset, margin + board_size
         );
 
         // horizontais
-        SDL_RenderDrawLine(*renderer,
+        SDL_RenderDrawLine(renderer,
             margin, margin + offset,
             margin + board_size, margin + offset
         );
     }
-    
-    SDL_RenderPresent(*renderer);
+}
+
+void drawCenter(SDL_Renderer* renderer, int cx, int cy){
+    int size = 10; // tamanho do quadrado
+
+    SDL_Rect rect = {
+        cx - size/2,
+        cy - size/2,
+        size,
+        size
+    };
+
+    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // vermelho
+    SDL_RenderFillRect(renderer, &rect);
 }
