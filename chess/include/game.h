@@ -4,6 +4,6 @@
 typedef struct {
     int cx, cy;
     // adicionar peça
-} Board;
+} Cell;
 
 #endif
