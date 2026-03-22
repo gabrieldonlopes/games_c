@@ -11,7 +11,7 @@ add_executable(chess
 )
 
 target_include_directories(chess PRIVATE
-    src
+    include
     ${SDL2_INCLUDE_DIRS}
 )
 
