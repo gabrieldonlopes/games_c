@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include "graph.h"
+#include "input.h"
 #include "game.h"
 
 /* 
@@ -17,6 +19,12 @@
 SDL_Window *window = NULL; // janela base
 SDL_Renderer *renderer = NULL; // renderizador base
 Cell cell[8][8];
+SDL_Texture* textures [12];
+
+// nota: sei que é melhor usar enum, mas tenho preguiça de adaptar 
+// nota2: sei também que não é legal ficar usando variaveis globais
+// provavelmente o certo é 'encapsular' numa struct, ou algo do tipo
+// mas honestamente: fodase
 
 int running = 1;
 SDL_Event event;
@@ -25,11 +33,17 @@ void handleInput();
 void updateGame();
 void render();
 
-int main(int argc, char* argv[]) {
+int piece_test = 0;
+
+int main(int argc, char *argv[]){
     if (setupWindow(&window, &renderer) != 0) {
         return 1;
     }
-    initBoard(cell);
+    initBoard(cell);  
+
+    IMG_Init(IMG_INIT_PNG);
+    initTextures(renderer, textures);
+
     while (running)
     {
         handleInput();
@@ -37,8 +51,9 @@ int main(int argc, char* argv[]) {
         render();
     }
 
-    SDL_DestroyRenderer(renderer);
+    destroyTextures(textures);
     SDL_DestroyWindow(window);
+    IMG_Quit();
     SDL_Quit();
 
     return 0;
@@ -52,18 +67,8 @@ void handleInput(){
         if (event.type == SDL_MOUSEBUTTONDOWN){
             int mouse_x = event.button.x;
             int mouse_y = event.button.y;
-            
-            for (int row = 0; row < 8; row++){
-                for (int col = 0; col < 8; col++){
-                    if(!cell[row][col].oc){
-                        if(mouse_x > cell[row][col].x1 && mouse_x < cell[row][col].x2 
-                        && mouse_y > cell[row][col].y1 && mouse_y < cell[row][col].y2){
-                            cell[row][col].oc = 1;
-                            printf("cx=%d,cy=%d,row=%d,col=%d,oc=%d\n", cell[row][col].cx, cell[row][col].cy, row, col, cell[row][col].oc);
-                        }
-                    }
-                }
-            }
+
+            handleMouseClick(cell, mouse_x, mouse_y);
         }
     }
 }
@@ -82,7 +87,9 @@ void render(){
     for (int row = 0; row < 8; row++){
         for (int col = 0; col < 8; col++){
             if(cell[row][col].oc){
-                drawCenter(renderer, cell[row][col].cx, cell[row][col].cy);
+                drawPiece(renderer, textures[5],
+               cell[row][col].cx,
+               cell[row][col].cy);
             }
         }
     }

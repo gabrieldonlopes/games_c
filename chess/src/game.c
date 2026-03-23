@@ -19,4 +19,6 @@ void initBoard(Cell cell[8][8]) {
             cell[row][col].oc = 0;
         }
     }
+
+    //cell[0][0]
 }

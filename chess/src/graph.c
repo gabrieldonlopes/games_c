@@ -41,8 +41,42 @@ int setupWindow(SDL_Window** window,SDL_Renderer** renderer){
     return 0;
 }
 
-void initTextures()
-void drawBoard(SDL_Renderer* renderer,Cell cell[8][8]){
+void initTextures(SDL_Renderer *renderer, SDL_Texture** textures){
+    char buffer[100];
+
+    for (int i = 0; i < 12; i++)
+    {
+        SDL_Surface *surface;
+        char color = (i % 2 == 0) ? 'b' : 'w';
+
+        snprintf(buffer, sizeof(buffer),
+                 "assets/%d_%c.png", i, color);
+
+        surface = IMG_Load(buffer);
+        if (!surface){
+            printf("Erro carregando %s: %s\n", buffer, IMG_GetError());
+            textures[i] = NULL;
+            continue;
+        }
+
+        textures[i] = SDL_CreateTextureFromSurface(renderer, surface);
+        SDL_FreeSurface(surface);
+
+        if (!textures[i]){
+            printf("Erro criando texture %s\n", buffer);
+        }
+    }
+}
+void destroyTextures(SDL_Texture** textures){
+    for (int i = 0; i < 12; i++){
+        if (textures[i] != NULL){
+            SDL_DestroyTexture(textures[i]);
+        }
+    }
+}
+
+void drawBoard(SDL_Renderer *renderer, Cell cell[8][8])
+{
     int margin = 40;
     int thickness = 2;
 
