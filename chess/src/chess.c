@@ -33,16 +33,17 @@ void handleInput();
 void updateGame();
 void render();
 
-int piece_test = 0;
+int num;
 
 int main(int argc, char *argv[]){
     if (setupWindow(&window, &renderer) != 0) {
         return 1;
     }
-    initBoard(cell);  
 
     IMG_Init(IMG_INIT_PNG);
     initTextures(renderer, textures);
+
+    initBoard(cell,textures);  
 
     while (running)
     {
@@ -67,6 +68,7 @@ void handleInput(){
         if (event.type == SDL_MOUSEBUTTONDOWN){
             int mouse_x = event.button.x;
             int mouse_y = event.button.y;
+            num++;
 
             handleMouseClick(cell, mouse_x, mouse_y);
         }
@@ -87,7 +89,7 @@ void render(){
     for (int row = 0; row < 8; row++){
         for (int col = 0; col < 8; col++){
             if(cell[row][col].oc){
-                drawPiece(renderer, textures[5],
+                drawPiece(renderer,cell[row][col].piece.texture,
                cell[row][col].cx,
                cell[row][col].cy);
             }

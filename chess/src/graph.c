@@ -60,6 +60,8 @@ void initTextures(SDL_Renderer *renderer, SDL_Texture** textures){
         }
 
         textures[i] = SDL_CreateTextureFromSurface(renderer, surface);
+        printf("%s carregado com sucesso\n", buffer);
+
         SDL_FreeSurface(surface);
 
         if (!textures[i]){
