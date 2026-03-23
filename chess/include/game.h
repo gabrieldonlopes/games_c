@@ -18,13 +18,7 @@ typedef enum {
 
 typedef struct {
     color_p color;
-    type_p type;
-    // outra abordagem útil seria pegar a texture no render
-    // guardando o TYPE e COLOR aqui, e
-    // 
-
-    // adicionar regra de movimentoint int index = piece.type * 2 + piece.color;index = piece.type * 2 + piece.color;
-    
+    type_p type;    
 } Piece;
 
 typedef struct {
