@@ -20,29 +20,32 @@ void initBoard(Cell cell[8][8],SDL_Texture** textures) {
         }
     }
     
-    int back_row[8] = {0, 2, 4, 6, 8, 4, 2, 0};
-
+    int black_row[8] = {0, 1, 2, 4, 3, 2, 1, 0};
     // pretas
-    for (int col = 0; col < 8; col++)
-    {
+    for (int col = 0; col < 8; col++) {
+        // peoes
         cell[1][col].oc = 1;
-        cell[1][col].piece.texture = textures[10];
-        cell[1][col].piece.color = 'b';
+        cell[1][col].piece.color = BLACK;
+        cell[1][col].piece.type = PAWN;
 
+        
         cell[0][col].oc = 1;
-        cell[0][col].piece.texture = textures[back_row[col]];
-        cell[0][col].piece.color = 'b';
+        cell[0][col].piece.color = BLACK;
+        cell[0][col].piece.type = 0 + black_row[col];
     }
 
+    int white_row[8] = {0, 1, 2, 3, 4, 2, 1, 0};
     // brancas
     for (int col = 0; col < 8; col++)
     {
+        // peoes
         cell[6][col].oc = 1;
-        cell[6][col].piece.texture = textures[11];
-        cell[6][col].piece.color = 'w';
+        cell[6][col].piece.color = WHITE;
+        cell[6][col].piece.type = PAWN;
 
+        // outras pecas
         cell[7][col].oc = 1;
-        cell[7][col].piece.texture = textures[back_row[col] + 1];
-        cell[7][col].piece.color = 'w';
+        cell[7][col].piece.type = white_row[col];
+        cell[7][col].piece.color = WHITE;
     }
 }

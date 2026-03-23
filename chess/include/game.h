@@ -2,15 +2,29 @@
 #define GAME_H
 #include <SDL_image.h>
 
+typedef enum {
+    BLACK,
+    WHITE
+} color_p;
+
+typedef enum {
+    ROOK,
+    KNIGHT,
+    BISHOP,
+    QUEEN,
+    KING,
+    PAWN
+} type_p;
+
 typedef struct {
-    SDL_Texture *texture;
+    color_p color;
+    type_p type;
     // outra abordagem útil seria pegar a texture no render
-    // guardando o TYPE e COLOR aqui, e 
-    // int index = piece.type * 2 + piece.color;
+    // guardando o TYPE e COLOR aqui, e
+    // 
 
     // adicionar regra de movimentoint int index = piece.type * 2 + piece.color;index = piece.type * 2 + piece.color;
     
-    char color; // w ou b
 } Piece;
 
 typedef struct {

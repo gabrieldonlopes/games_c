@@ -89,7 +89,9 @@ void render(){
     for (int row = 0; row < 8; row++){
         for (int col = 0; col < 8; col++){
             if(cell[row][col].oc){
-                drawPiece(renderer,cell[row][col].piece.texture,
+                // pegando a textura da peça baseado no seu tipo e cor
+                int index = cell[row][col].piece.type * 2 + cell[row][col].piece.color;
+                drawPiece(renderer,textures[index],
                cell[row][col].cx,
                cell[row][col].cy);
             }
