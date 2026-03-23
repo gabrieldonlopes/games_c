@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <SDL2/SDL.h>
+#include <SDL_image.h>
 #include <math.h>
 #include "graph.h"
 #include "game.h"
@@ -40,6 +41,7 @@ int setupWindow(SDL_Window** window,SDL_Renderer** renderer){
     return 0;
 }
 
+void initTextures()
 void drawBoard(SDL_Renderer* renderer,Cell cell[8][8]){
     int margin = 40;
     int thickness = 2;
@@ -54,7 +56,7 @@ void drawBoard(SDL_Renderer* renderer,Cell cell[8][8]){
         background_color[2],
         255
     );
-    
+
     // pintando casas
     for (int row = 0; row < 8; row++){
         for (int col = 0; col < 8; col++){
@@ -126,8 +128,8 @@ void drawBoard(SDL_Renderer* renderer,Cell cell[8][8]){
     }
 }
 
-void drawCenter(SDL_Renderer* renderer, int cx, int cy){
-    int size = 10; // tamanho do quadrado
+void drawPiece(SDL_Renderer* renderer, SDL_Texture* texture, int cx, int cy){
+    int size = 60;
 
     SDL_Rect rect = {
         cx - size/2,
@@ -136,6 +138,5 @@ void drawCenter(SDL_Renderer* renderer, int cx, int cy){
         size
     };
 
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // vermelho
-    SDL_RenderFillRect(renderer, &rect);
+    SDL_RenderCopy(renderer, texture, NULL, &rect);
 }

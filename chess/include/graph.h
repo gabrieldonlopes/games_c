@@ -5,10 +5,11 @@
 #define HEIGHT 600
 
 #include <SDL2/SDL.h>
+#include <SDL_image.h>
 #include "game.h"
 
 int setupWindow(SDL_Window** window, SDL_Renderer** renderer);
 void drawBoard(SDL_Renderer* renderer,Cell cell [8][8]);
-void drawCenter(SDL_Renderer *renderer, int cx, int cy);
+void drawPiece(SDL_Renderer *renderer, SDL_Texture *texture, int cx, int cy);
 
 #endif
