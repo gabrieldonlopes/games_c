@@ -8,6 +8,12 @@ typedef struct {
 
     int oc;
 } Cell;
+
+typedef struct {
+    
+
+} Piece;
+
 void initBoard(Cell cell[8][8]);
 
 #endif
