@@ -54,8 +54,7 @@ void drawBoard(SDL_Renderer* renderer,Cell cell[8][8]){
         background_color[2],
         255
     );
-    SDL_RenderClear(renderer);
-
+    
     // pintando casas
     for (int row = 0; row < 8; row++){
         for (int col = 0; col < 8; col++){
@@ -81,12 +80,19 @@ void drawBoard(SDL_Renderer* renderer,Cell cell[8][8]){
                 cell_size - 1,
             };
 
-            // adicionar celula ao board
+            // inicializando board
             cell[row][col].cx = cell_rect.x + cell_rect.w / 2;
             cell[row][col].cy = cell_rect.y + cell_rect.h / 2;
-            
+
+            cell[row][col].x1 = cell_rect.x;
+            cell[row][col].y1 = cell_rect.y;
+            cell[row][col].x2 = cell_rect.x + cell_rect.w;
+            cell[row][col].y2 = cell_rect.y + cell_rect.h;
+
             SDL_RenderFillRect(renderer, &cell_rect);
-            drawCenter(renderer, cell[row][col].cx, cell[row][col].cy);
+            
+            // testando se deu tudo certo
+            //drawCenter(renderer, cell[row][col].cx, cell[row][col].cy);
         }
     }
 

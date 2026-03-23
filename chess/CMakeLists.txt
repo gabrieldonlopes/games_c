@@ -8,6 +8,7 @@ find_package(SDL2 REQUIRED)
 add_executable(chess
     src/chess.c
     src/graph.c
+    src/game.c
 )
 
 target_include_directories(chess PRIVATE
