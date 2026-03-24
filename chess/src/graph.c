@@ -176,3 +176,48 @@ void drawPiece(SDL_Renderer* renderer, SDL_Texture* texture, int cx, int cy){
 
     SDL_RenderCopy(renderer, texture, NULL, &rect);
 }
+
+// desenhando um circulo com magia negra
+int fillCircle(SDL_Renderer *prenderer, int x, int y, int radius){
+
+    SDL_SetRenderDrawColor(prenderer,5, 125, 37,255); // preto com opacidade
+    int offsetx, offsety, d;
+    int status;
+
+    offsetx = 0;
+    offsety = radius;
+    d = radius - 1;
+    status = 0;
+    while (offsety >= offsetx) {
+
+        status += SDL_RenderDrawLine(prenderer, x - offsety, y + offsetx,
+                                     x + offsety, y + offsetx);
+        status += SDL_RenderDrawLine(prenderer, x - offsetx, y + offsety,
+                                     x + offsetx, y + offsety);
+        status += SDL_RenderDrawLine(prenderer, x - offsetx, y - offsety,
+                                     x + offsetx, y - offsety);
+        status += SDL_RenderDrawLine(prenderer, x - offsety, y - offsetx,
+                                     x + offsety, y - offsetx);
+
+        if (status < 0) {
+            status = -1;
+            break;
+        }
+
+        if (d >= 2*offsetx) {
+            d -= 2*offsetx + 1;
+            offsetx +=1;
+        }
+        else if (d < 2 * (radius - offsety)) {
+            d += 2 * offsety - 1;
+            offsety -= 1;
+        }
+        else {
+            d += 2 * (offsety - offsetx - 1);
+            offsety -= 1;
+            offsetx += 1;
+        }
+    }
+
+    return status;
+}
