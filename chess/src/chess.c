@@ -33,13 +33,15 @@ void handleInput();
 void updateGame();
 void render();
 
-int num;
+// usando variavel global fds
+int piece_select = 0;
 
 int main(int argc, char *argv[]){
     if (setupWindow(&window, &renderer) != 0) {
         return 1;
     }
 
+    // SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND); // permitindo opacidade
     IMG_Init(IMG_INIT_PNG);
     initTextures(renderer, textures);
 
@@ -68,9 +70,8 @@ void handleInput(){
         if (event.type == SDL_MOUSEBUTTONDOWN){
             int mouse_x = event.button.x;
             int mouse_y = event.button.y;
-            num++;
 
-            handleMouseClick(cell, mouse_x, mouse_y);
+            handleMouseClick(cell, mouse_x, mouse_y,&piece_select);
         }
     }
 }
@@ -94,6 +95,10 @@ void render(){
                 drawPiece(renderer,textures[index],
                cell[row][col].cx,
                cell[row][col].cy);
+            }
+            // desenhando circulos onde a peça pode se mover
+            if (cell[row][col].can_move){
+                fillCircle(renderer, cell[row][col].cx, cell[row][col].cy, 10);
             }
         }
     }

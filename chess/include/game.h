@@ -24,10 +24,12 @@ typedef struct {
 typedef struct {
     int cx, cy; // centro da célula,
     int x1, y1, x2, y2; // intervalos onde o jogador pode clicar
-    Piece piece;
-    int oc;
+    Piece piece; // peça que ocupa a casa
+    int oc; // ocupada ou não
+    int can_move; // 
 } Cell;
 
 void initBoard(Cell cell[8][8],SDL_Texture** textures);
+void showPossibleMoves(Cell board[8][8], int row, int col);
 
 #endif

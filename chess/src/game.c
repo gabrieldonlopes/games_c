@@ -49,3 +49,11 @@ void initBoard(Cell cell[8][8],SDL_Texture** textures) {
         cell[7][col].piece.color = WHITE;
     }
 }
+
+void showPossibleMoves(Cell board[8][8],int row,int col){ // recebendo o board inteiro e as coordenadas da peça que quer se mover
+    // caso exemplo para peoes
+    if (!board[row-1][col].oc){ // caso casa da frente esteja liberada
+        board[row - 1][col].can_move = 1;
+        board[row - 2][col].can_move = 1;
+    }
+};
