@@ -180,7 +180,7 @@ void drawPiece(SDL_Renderer* renderer, SDL_Texture* texture, int cx, int cy){
 // desenhando um circulo com magia negra
 int fillCircle(SDL_Renderer *prenderer, int x, int y, int radius){
 
-    SDL_SetRenderDrawColor(prenderer,5, 125, 37,255); // preto com opacidade
+    SDL_SetRenderDrawColor(prenderer,5, 125, 37,255); 
     int offsetx, offsety, d;
     int status;
 
@@ -220,4 +220,35 @@ int fillCircle(SDL_Renderer *prenderer, int x, int y, int radius){
     }
 
     return status;
+}
+
+void drawSelectionBox(SDL_Renderer *renderer, Cell c){
+    SDL_SetRenderDrawColor(renderer, 153, 15, 15, 255);
+
+    int x1 = c.x1;
+    int y1 = c.y1;
+    int x2 = c.x2;
+    int y2 = c.y2;
+
+    int size = 10;      // tamanho das linhas
+    int thickness = 5;  // espessura
+
+    for (int t = 0; t < thickness; t++)
+    {
+        // canto superior esquerdo
+        SDL_RenderDrawLine(renderer, x1, y1+t, x1+size, y1+t);
+        SDL_RenderDrawLine(renderer, x1+t, y1, x1+t, y1+size);
+
+        // canto superior direito
+        SDL_RenderDrawLine(renderer, x2-size, y1+t, x2, y1+t);
+        SDL_RenderDrawLine(renderer, x2-t, y1, x2-t, y1+size);
+
+        // canto inferior esquerdo
+        SDL_RenderDrawLine(renderer, x1, y2-t, x1+size, y2-t);
+        SDL_RenderDrawLine(renderer, x1+t, y2-size, x1+t, y2);
+
+        // canto inferior direito
+        SDL_RenderDrawLine(renderer, x2-size, y2-t, x2, y2-t);
+        SDL_RenderDrawLine(renderer, x2-t, y2-size, x2-t, y2);
+    }
 }
