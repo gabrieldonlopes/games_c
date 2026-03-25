@@ -13,6 +13,10 @@
 --------------------------------------------------------
 */
 
+int inBoard(int row, int col){
+    return row >= 0 && row < 8 && col >= 0 && col < 8;
+}
+
 void initBoard(Cell cell[8][8],SDL_Texture** textures) {
     for (int row = 0; row < 8; row++){
         for (int col = 0; col < 8; col++){
@@ -27,6 +31,7 @@ void initBoard(Cell cell[8][8],SDL_Texture** textures) {
         cell[1][col].oc = 1;
         cell[1][col].piece.color = BLACK;
         cell[1][col].piece.type = PAWN;
+        cell[1][col].piece.first_move = 1;
 
         
         cell[0][col].oc = 1;
@@ -42,7 +47,8 @@ void initBoard(Cell cell[8][8],SDL_Texture** textures) {
         cell[6][col].oc = 1;
         cell[6][col].piece.color = WHITE;
         cell[6][col].piece.type = PAWN;
-
+        cell[6][col].piece.first_move = 1;
+        
         // outras pecas
         cell[7][col].oc = 1;
         cell[7][col].piece.type = white_row[col];
@@ -50,12 +56,58 @@ void initBoard(Cell cell[8][8],SDL_Texture** textures) {
     }
 }
 
-void showPossibleMoves(Cell board[8][8],int row,int col){ // recebendo o board inteiro e as coordenadas da peça que quer se mover
-    // caso exemplo para peoes brancos
-    if (!board[row-1][col].oc){ // caso casa da frente esteja liberada
-        board[row - 1][col].can_move = 1;
-        board[row - 2][col].can_move = 1;
+void showPossibleMoves(Cell board[8][8],int row,int col){
+    int mod = 1;
+    if (board[row][col].piece.color == WHITE)
+    {
+        mod = -1;
     }
+
+    switch (board[row][col].piece.type)
+    {
+    case ROOK:
+        break;
+    case KNIGHT:
+        break;
+    case BISHOP:
+        break;
+    case QUEEN:
+        break;
+    case KING:
+        break;
+    case PAWN:
+        // casa da frente
+        if (inBoard(row + mod, col) && !board[row + mod][col].oc){
+            board[row + mod][col].can_move = 1;
+
+            // duas casas
+            if (board[row][col].piece.first_move &&
+                inBoard(row + 2*mod, col) &&
+                !board[row + 2*mod][col].oc){
+                
+                board[row + 2*mod][col].can_move = 1;
+            }
+        }
+
+        // diagonal direita
+        if (inBoard(row + mod, col + 1) &&
+            board[row + mod][col + 1].oc &&
+            board[row + mod][col + 1].piece.color != board[row][col].piece.color){
+            
+            board[row + mod][col + 1].can_move = 1;
+        }
+
+        // diagonal esquerda
+        if (inBoard(row + mod, col - 1) &&
+            board[row + mod][col - 1].oc &&
+            board[row + mod][col - 1].piece.color != board[row][col].piece.color){
+            
+            board[row + mod][col - 1].can_move = 1;
+        }
+
+        break;
+    }
+
 };
 
 Piece emptyPiece(){

@@ -26,6 +26,9 @@ void handleMouseClick(Cell cell[8][8], int mouse_x, int mouse_y,
 
                         cell[row][col].oc = 1;
                         cell[row][col].piece = cell[piece_clicked[0]][piece_clicked[1]].piece;
+                        if (cell[row][col].piece.type == PAWN){
+                            cell[row][col].piece.first_move = 0;
+                        }
 
                         cell[piece_clicked[0]][piece_clicked[1]].oc = 0;
                         cell[piece_clicked[0]][piece_clicked[1]].piece = emptyPiece();

@@ -12,13 +12,14 @@ typedef enum {
     KNIGHT,
     BISHOP,
     QUEEN,
-    KING,
+    KING, 
     PAWN
 } type_p;
 
 typedef struct {
     color_p color;
-    type_p type;    
+    type_p type;
+    int first_move;
 } Piece;
 
 typedef struct {
@@ -29,7 +30,8 @@ typedef struct {
     int can_move; 
 } Cell;
 
-void initBoard(Cell cell[8][8],SDL_Texture** textures);
+int inBoard(int row, int col);
+void initBoard(Cell cell[8][8], SDL_Texture **textures);
 void showPossibleMoves(Cell board[8][8], int row, int col);
 Piece emptyPiece();
 
