@@ -4,6 +4,7 @@
 #include "graph.h"
 #include "input.h"
 #include "game.h"
+#include "debug.h"
 
 /* 
 --------------------------------------------------------
@@ -68,11 +69,22 @@ void handleInput(){
         if (event.type == SDL_QUIT) {
             running = 0;
         }
-        if (event.type == SDL_MOUSEBUTTONDOWN){
+        else if (event.type == SDL_MOUSEBUTTONDOWN){
             int mouse_x = event.button.x;
             int mouse_y = event.button.y;
-
             handleMouseClick(cell, mouse_x, mouse_y,&piece_select,piece_clicked);
+        }
+        else if (event.type == SDL_KEYDOWN){
+            if (event.key.keysym.scancode == SDL_SCANCODE_D){
+                debugBoard(cell);
+            }
+
+            if (event.key.keysym.scancode == SDL_SCANCODE_M){
+                debugMoves(cell);
+            }
+            if (event.key.keysym.scancode == SDL_SCANCODE_C){
+                debugCell(cell[piece_clicked[0]-1][piece_clicked[1]]);
+            }
         }
     }
 }
@@ -97,9 +109,11 @@ void render(){
                cell[row][col].cx,
                cell[row][col].cy);
             }
-            // desenhando circulos onde a peça pode se mover
-            if (cell[row][col].can_move){
+            if (cell[row][col].can_move&&cell[row][col].oc){  // circulo cheio e verde onde não tem peça
+                drawSelectionBox(renderer, cell[row][col]);
+            } else if (cell[row][col].can_move){ // circulo vazio e vermelho onde tem peça
                 fillCircle(renderer, cell[row][col].cx, cell[row][col].cy, 10);
+                
             }
         }
     }

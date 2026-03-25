@@ -11,6 +11,7 @@ add_executable(chess
     src/graph.c
     src/game.c
     src/input.c
+    src/debug.c
 )
 
 target_include_directories(chess PRIVATE
