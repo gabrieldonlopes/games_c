@@ -83,7 +83,7 @@ void handleInput(){
                 debugMoves(cell);
             }
             if (event.key.keysym.scancode == SDL_SCANCODE_C){
-                debugCell(cell[piece_clicked[0]-1][piece_clicked[1]]);
+                debugCell(cell[piece_clicked[0]][piece_clicked[1]]);
             }
         }
     }

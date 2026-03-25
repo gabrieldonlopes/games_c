@@ -68,6 +68,22 @@ void showPossibleMoves(Cell board[8][8],int row,int col){
     case ROOK:
         break;
     case KNIGHT:
+        int moves[8][2] = { // conjunto de possibilidades do cavalo
+            {2,  1}, {2,  -1},
+            {-2, 1}, {-2, -1},
+            {1,  2}, {1,  -2},
+            {-1, 2}, {-1,-2}
+        };
+        for (int i = 0; i < 8; i++){
+            int r = row + moves[i][0];
+            int c = col + moves[i][1];
+
+            if (inBoard(r, c) && (!board[r][c].oc ||
+            board[r][c].piece.color != board[row][col].piece.color)) {
+                board[r][c].can_move = 1;
+            }
+        }
+
         break;
     case BISHOP:
         break;
