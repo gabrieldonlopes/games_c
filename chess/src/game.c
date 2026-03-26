@@ -56,6 +56,25 @@ void initBoard(Cell cell[8][8],SDL_Texture** textures) {
     }
 }
 
+void checkDirection(Cell board[8][8], int row, int col, int dRow, int dCol){
+    for (int i = 1; i < 8; i++){
+        int newRow = row + i * dRow;
+        int newCol = col + i * dCol;
+
+        if (!inBoard(newRow, newCol))
+            break;
+
+        if (board[newRow][newCol].oc){
+            if (board[row][col].piece.color != board[newRow][newCol].piece.color){
+                board[newRow][newCol].can_move = 1;
+            }
+            break;
+        } else {
+            board[newRow][newCol].can_move = 1;
+        }
+    }
+}
+
 void showPossibleMoves(Cell board[8][8],int row,int col){
     int mod = 1;
     if (board[row][col].piece.color == WHITE)
@@ -66,13 +85,19 @@ void showPossibleMoves(Cell board[8][8],int row,int col){
     switch (board[row][col].piece.type)
     {
     case ROOK:
+
+        checkDirection(board, row, col, -1,  0); // cima
+        checkDirection(board, row, col,  1,  0); // baixo
+        checkDirection(board, row, col,  0,  1); // direita
+        checkDirection(board, row, col,  0, -1); // esquerda
+
         break;
     case KNIGHT:
         int moves[8][2] = { // conjunto de possibilidades do cavalo
             {2,  1}, {2,  -1},
             {-2, 1}, {-2, -1},
             {1,  2}, {1,  -2},
-            {-1, 2}, {-1,-2}
+            {-1, 2}, {-1, -2}
         };
         for (int i = 0; i < 8; i++){
             int r = row + moves[i][0];
@@ -86,12 +111,18 @@ void showPossibleMoves(Cell board[8][8],int row,int col){
 
         break;
     case BISHOP:
+
+        checkDirection(board, row, col, -1,  1); // diagonal nordeste
+        checkDirection(board, row, col,  1,  1); // diagonal sudeste
+        checkDirection(board, row, col, -1,  1); // diagonal sudoeste
+        checkDirection(board, row, col, -1, -1); // diagonal noroeste
+
         break;
     case QUEEN:
         break;
     case KING:
         break;
-    case PAWN:
+    case PAWN: 
         // casa da frente
         if (inBoard(row + mod, col) && !board[row + mod][col].oc){
             board[row + mod][col].can_move = 1;
