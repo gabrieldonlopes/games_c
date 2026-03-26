@@ -1,4 +1,14 @@
 #include "game.h"
+/* 
+--------------------------------------------------------
+# input.c
+#
+# Description: funcoes de logica de controle de input do jogador
+# Autor: gdon - gabriellopes.zip@gmail.com
+# Version: 1.0
+# Data: 
+--------------------------------------------------------
+*/
 
 // caso o usario já tenha se movido ou clicado em outra peça
 void resetCanMove(Cell cell[8][8]){
