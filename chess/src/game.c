@@ -93,15 +93,15 @@ void showPossibleMoves(Cell board[8][8],int row,int col){
 
         break;
     case KNIGHT:
-        int moves[8][2] = { // conjunto de possibilidades do cavalo
+        int moves_k[8][2] = { // conjunto de possibilidades do cavalo
             {2,  1}, {2,  -1},
             {-2, 1}, {-2, -1},
             {1,  2}, {1,  -2},
             {-1, 2}, {-1, -2}
         };
         for (int i = 0; i < 8; i++){
-            int r = row + moves[i][0];
-            int c = col + moves[i][1];
+            int r = row + moves_k[i][0];
+            int c = col + moves_k[i][1];
 
             if (inBoard(r, c) && (!board[r][c].oc ||
             board[r][c].piece.color != board[row][col].piece.color)) {
@@ -114,12 +114,24 @@ void showPossibleMoves(Cell board[8][8],int row,int col){
 
         checkDirection(board, row, col, -1,  1); // diagonal nordeste
         checkDirection(board, row, col,  1,  1); // diagonal sudeste
-        checkDirection(board, row, col, -1,  1); // diagonal sudoeste
+        checkDirection(board, row, col,  1, -1); // diagonal sudoeste
         checkDirection(board, row, col, -1, -1); // diagonal noroeste
 
         break;
     case QUEEN:
-        break;
+        int moves_q[8][2] = { // conjunto de possibilidades da rainha
+            {-1, 0}, { 1,  0},
+            { 0,-1}, { 0,  1},
+            {-1, 1}, { 1, -1},
+            {-1,-1}, { 1,  1}
+        };
+        for (int i = 0; i < 8;i++){
+            int r = moves_q[i][0];
+            int c = moves_q[i][1];
+
+            checkDirection(board, row, col,  r, c); 
+        }
+
     case KING:
         break;
     case PAWN: 
