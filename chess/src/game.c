@@ -133,6 +133,7 @@ void showPossibleMoves(Cell board[8][8],int row,int col){
         }
 
     case KING:
+        
         break;
     case PAWN: 
         // casa da frente

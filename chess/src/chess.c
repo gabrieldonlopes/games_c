@@ -37,6 +37,7 @@ void render();
 // usando variavel global fds
 int piece_select = 0;
 int piece_clicked[2] = {-1,-1};
+color_p player_turn = WHITE; 
 
 int main(int argc, char *argv[]){
     if (setupWindow(&window, &renderer) != 0) {
@@ -72,7 +73,7 @@ void handleInput(){
         else if (event.type == SDL_MOUSEBUTTONDOWN){
             int mouse_x = event.button.x;
             int mouse_y = event.button.y;
-            handleMouseClick(cell, mouse_x, mouse_y,&piece_select,piece_clicked);
+            handleMouseClick(cell, mouse_x, mouse_y,&piece_select,piece_clicked,&player_turn);
         }
         else if (event.type == SDL_KEYDOWN){
             if (event.key.keysym.scancode == SDL_SCANCODE_D){
