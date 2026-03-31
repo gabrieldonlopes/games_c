@@ -133,7 +133,35 @@ void showPossibleMoves(Cell board[8][8],int row,int col){
         }
 
     case KING:
+        // basicamente a mesma movimentação da rainha, mas sem o loop
         
+        int moves_king[8][2] = { // conjunto de possibilidades do rei
+            {-1, 0}, { 1,  0},
+            { 0,-1}, { 0,  1},
+            {-1, 1}, { 1, -1},
+            {-1,-1}, { 1,  1}
+        };
+        
+        for (int i = 0; i < 8; i++){
+            int r = moves_king[i][0];
+            int c = moves_king[i][1];
+
+            int newRow = row + r;
+            int newCol = col + c;
+
+            if (!inBoard(newRow, newCol))
+                continue;
+
+            if (board[newRow][newCol].oc){
+                if (board[row][col].piece.color != board[newRow][newCol].piece.color){
+                    board[newRow][newCol].can_move = 1;
+                }
+            } else {
+                board[newRow][newCol].can_move = 1;
+            }
+        }
+
+
         break;
     case PAWN: 
         // casa da frente

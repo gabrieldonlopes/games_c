@@ -37,7 +37,7 @@ void render();
 // usando variavel global fds
 int piece_select = 0;
 int piece_clicked[2] = {-1,-1};
-color_p player_turn = WHITE; 
+color_p player_turn = WHITE;
 
 int main(int argc, char *argv[]){
     if (setupWindow(&window, &renderer) != 0) {
