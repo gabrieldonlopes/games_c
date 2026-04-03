@@ -86,6 +86,13 @@ void handleInput(){
             if (event.key.keysym.scancode == SDL_SCANCODE_C){
                 debugCell(cell[piece_clicked[0]][piece_clicked[1]]);
             }
+
+            // reset da partida
+            if (event.key.keysym.scancode == SDL_SCANCODE_R){
+                piece_select = 0;
+                player_turn = WHITE;
+                initBoard(cell,textures);  
+            }
         }
     }
 }
