@@ -110,11 +110,12 @@ void render(){
                cell[row][col].cx,
                cell[row][col].cy);
             }
-            if (cell[row][col].can_move&&cell[row][col].oc){  // circulo cheio e verde onde não tem peça
+            if (cell[row][col].can_move&&cell[row][col].oc){ // casa onde uma peça come a outra
                 drawSelectionBox(renderer, cell[row][col]);
-            } else if (cell[row][col].can_move){ // circulo vazio e vermelho onde tem peça
-                fillCircle(renderer, cell[row][col].cx, cell[row][col].cy, 10);
-                
+            } else if (cell[row][col].can_move){  // casa onde uma peça pode se movimentar
+                fillCircle(renderer, cell[row][col].cx, cell[row][col].cy, 10, MOVE);
+            } else if (cell[row][col].can_castling){ // casa onde uma peça pode fazer castling
+                fillCircle(renderer, cell[row][col].cx, cell[row][col].cy, 10, CASTLING);
             }
         }
     }

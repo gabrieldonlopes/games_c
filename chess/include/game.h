@@ -8,6 +8,12 @@ typedef enum {
 } color_p;
 
 typedef enum {
+    MOVE,
+    CASTLING,
+    PROMOTION
+} type_m;
+
+typedef enum {
     ROOK,
     KNIGHT,
     BISHOP,
@@ -27,7 +33,8 @@ typedef struct {
     int x1, y1, x2, y2; // intervalos onde o jogador pode clicar
     Piece piece; // peça que ocupa a casa
     int oc; // ocupada ou não
-    int can_move; 
+    int can_move;
+    int can_castling;
 } Cell;
 
 int inBoard(int row, int col);

@@ -100,7 +100,10 @@ int verifyEmptyCols (Cell board[8][8],int colA,int colB,int row){
         end = colA;
     }
 
-    for (int i = start; i <= end;i++){
+    printf("%d,%d\n", start,end);
+
+    for (int i = start+1; i < end; i++)
+    {
         if (board[row][i].oc){
             printf("casas bloqueadas\n");
 
@@ -111,7 +114,7 @@ int verifyEmptyCols (Cell board[8][8],int colA,int colB,int row){
     return 1;
 }
 
-void verifyCastiling(Cell board[8][8],int row, int col){
+void verifyCastling(Cell board[8][8],int row, int col){
     if (row != 0 && row != 7) return; // caso a peça não esteja na primeira linha
     if (!board[row][col].piece.first_move) return; // caso seja seu primeiro movimento
 
@@ -123,7 +126,10 @@ void verifyCastiling(Cell board[8][8],int row, int col){
             // roque curto
             printf("testando roque curto\n");
 
-            if(verifyEmptyCols(board, col, col-(3*mod),row)) board[row][col - (2 * mod)].can_move = 1;
+            if(verifyEmptyCols(board, col, col-(3*mod),row)){
+                board[row][col - (2 * mod)].can_castling = 1;
+            } 
+
 
         } 
         
@@ -132,8 +138,9 @@ void verifyCastiling(Cell board[8][8],int row, int col){
             // roque longo
             printf("testando roque longo\n");
 
-            if(verifyEmptyCols(board, col, col+(4*mod),row)) board[row][col - (3 * mod)].can_move = 1;
-            
+            if(verifyEmptyCols(board, col, col+(4*mod),row)) {
+                board[row][col + (2 * mod)].can_castling = 1;
+            }
 
         }
 
@@ -225,7 +232,7 @@ void showPossibleMoves(Cell board[8][8],int row,int col){
             {-1,-1}, { 1,  1}
         };
         
-        verifyCastiling(board, row, col);
+        verifyCastling(board, row, col);
 
         for (int i = 0; i < 8; i++){
             int r = moves_king[i][0];

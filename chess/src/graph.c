@@ -178,9 +178,13 @@ void drawPiece(SDL_Renderer* renderer, SDL_Texture* texture, int cx, int cy){
 }
 
 // desenhando um circulo com magia negra
-int fillCircle(SDL_Renderer *prenderer, int x, int y, int radius){
-
-    SDL_SetRenderDrawColor(prenderer,5, 125, 37,255); 
+int fillCircle(SDL_Renderer *prenderer, int x, int y, int radius,type_m type_m){
+    if (type_m == MOVE){
+        SDL_SetRenderDrawColor(prenderer,5, 125, 37,255); 
+    } else if (type_m == CASTLING){
+        SDL_SetRenderDrawColor(prenderer,25, 44, 252,255); 
+    }
+    
     int offsetx, offsety, d;
     int status;
 

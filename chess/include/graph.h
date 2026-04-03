@@ -14,7 +14,7 @@ void drawBoard(SDL_Renderer* renderer,Cell cell [8][8]);
 void drawPiece(SDL_Renderer *renderer, SDL_Texture *texture, int cx, int cy);
 void initTextures(SDL_Renderer *renderer, SDL_Texture **textures);
 void destroyTextures(SDL_Texture **textures);
-int fillCircle(SDL_Renderer *prenderer, int x, int y, int radius);
+int fillCircle(SDL_Renderer *prenderer, int x, int y, int radius,type_m type_m);
 void drawSelectionBox(SDL_Renderer *renderer, Cell c);
 
 #endif
