@@ -15,6 +15,7 @@ void resetCanMove(Cell cell[8][8]){
     for (int row = 0; row < 8; row++){
         for (int col = 0; col < 8;col++){
             cell[row][col].can_move = 0;
+            cell[row][col].can_castling = 0;
         }
     }
 }
@@ -30,7 +31,7 @@ void handleMouseClick(Cell cell[8][8], int mouse_x, int mouse_y,
                 // CLICOU EM UMA CÉLULA
                 if (*piece_selected){
                     // tentar mover peça
-                    if(cell[row][col].can_move){
+                    if(cell[row][col].can_move || cell[row][col].can_castling){
 
                         cell[row][col].oc = 1;
                         cell[row][col].piece = cell[piece_clicked[0]][piece_clicked[1]].piece;
@@ -45,6 +46,41 @@ void handleMouseClick(Cell cell[8][8], int mouse_x, int mouse_y,
                         cell[piece_clicked[0]][piece_clicked[1]].oc = 0;
                         cell[piece_clicked[0]][piece_clicked[1]].piece = emptyPiece();
                         
+
+                        // verificar se foi roque
+                        if (cell[row][col].can_castling && 
+                            cell[row][col].piece.type == KING) {
+
+                            int oldCol = piece_clicked[1];
+                            int newCol = col;
+
+                            // roque curto (rei foi para a direita)
+                            if (newCol > oldCol) {
+                                // torre está à direita
+                                int rookCol = 7; // coluna da torre
+                                int newRookCol = newCol - 1;
+
+                                cell[row][newRookCol].oc = 1;
+                                cell[row][newRookCol].piece = cell[row][rookCol].piece;
+                                cell[row][newRookCol].piece.first_move = 0;
+
+                                cell[row][rookCol].oc = 0;
+                                cell[row][rookCol].piece = emptyPiece();
+                            }
+                            // roque longo (rei foi para a esquerda)
+                            else {
+                                int rookCol = 0;
+                                int newRookCol = newCol + 1;
+
+                                cell[row][newRookCol].oc = 1;
+                                cell[row][newRookCol].piece = cell[row][rookCol].piece;
+                                cell[row][newRookCol].piece.first_move = 0;
+
+                                cell[row][rookCol].oc = 0;
+                                cell[row][rookCol].piece = emptyPiece();
+                            }
+                        }
+
                         // ternario de troca de jogador
                         *player_turn = (*player_turn == WHITE) ? BLACK : WHITE; 
                     }

@@ -100,17 +100,12 @@ int verifyEmptyCols (Cell board[8][8],int colA,int colB,int row){
         end = colA;
     }
 
-    printf("%d,%d\n", start,end);
-
     for (int i = start+1; i < end; i++)
     {
         if (board[row][i].oc){
-            printf("casas bloqueadas\n");
-
             return 0;
         }
     }
-    printf("casas liberadas\n");
     return 1;
 }
 
@@ -124,8 +119,6 @@ void verifyCastling(Cell board[8][8],int row, int col){
         if (board[row][col-(3*mod)].piece.type == ROOK && 
             board[row][col-(3*mod)].piece.first_move) {
             // roque curto
-            printf("testando roque curto\n");
-
             if(verifyEmptyCols(board, col, col-(3*mod),row)){
                 board[row][col - (2 * mod)].can_castling = 1;
             } 
@@ -136,33 +129,12 @@ void verifyCastling(Cell board[8][8],int row, int col){
         if (board[row][col+(4*mod)].piece.type == ROOK && 
                    board[row][col+(4*mod)].piece.first_move){
             // roque longo
-            printf("testando roque longo\n");
-
             if(verifyEmptyCols(board, col, col+(4*mod),row)) {
                 board[row][col + (2 * mod)].can_castling = 1;
             }
 
         }
-
-    } else if (board[row][col].piece.type == ROOK){
-        if (board[row][col+(3*mod)].piece.type == KING && 
-            board[row][col+(3*mod)].piece.first_move) {
-            // roque curto
-            if(verifyEmptyCols(board, col,col+(3*mod),row)) return;
-            board[row][col - (2 * mod)].can_move = 1;
-        
-
-        } 
-
-        if (board[row][col-(4*mod)].piece.type == KING && 
-                   board[row][col-(4*mod)].piece.first_move){
-            // roque longo
-            if(!verifyEmptyCols(board, col,col-(4*mod),row)) return;
-            board[row][col - (2 * mod)].can_move = 1;
-        
-            
-        }
-    }   
+    }
 }
 
 void showPossibleMoves(Cell board[8][8],int row,int col){
@@ -232,7 +204,7 @@ void showPossibleMoves(Cell board[8][8],int row,int col){
             {-1,-1}, { 1,  1}
         };
         
-        verifyCastling(board, row, col);
+        verifyCastling(board, row, col); // verificanod possibilidade de realizar roque
 
         for (int i = 0; i < 8; i++){
             int r = moves_king[i][0];
