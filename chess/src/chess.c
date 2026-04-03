@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL_ttf.h> 
 #include "graph.h"
 #include "input.h"
 #include "game.h"
@@ -19,6 +20,7 @@
 
 SDL_Window *window = NULL; // janela base
 SDL_Renderer *renderer = NULL; // renderizador base
+TTF_Font *font = NULL;         // fontes
 Cell cell[8][8];
 SDL_Texture* textures [12];
 
@@ -40,7 +42,7 @@ int piece_clicked[2] = {-1,-1};
 color_p player_turn = WHITE;
 
 int main(int argc, char *argv[]){
-    if (setupWindow(&window, &renderer) != 0) {
+    if (setupWindow(&window, &renderer,&font) != 0) {
         return 1;
     }
 
@@ -60,6 +62,7 @@ int main(int argc, char *argv[]){
     destroyTextures(textures);
     SDL_DestroyWindow(window);
     IMG_Quit();
+    TTF_Quit();
     SDL_Quit();
 
     return 0;
@@ -106,7 +109,7 @@ void render(){
     SDL_SetRenderDrawColor(renderer, 200, 200, 200, 255);
     SDL_RenderClear(renderer);
     // desenhar
-    drawBoard(renderer, cell);
+    drawBoard(renderer,font, cell);
     // desenhar peças ocupadas
     for (int row = 0; row < 8; row++){
         for (int col = 0; col < 8; col++){

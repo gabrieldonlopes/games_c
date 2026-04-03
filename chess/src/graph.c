@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <SDL2/SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h> 
 #include <math.h>
 #include "graph.h"
 #include "game.h"
@@ -19,7 +20,7 @@
 const int background_color[3] = {207, 233, 250};
 const int cell_color[2][3] = {{209, 199, 182},{122, 90, 34}};
 
-int setupWindow(SDL_Window** window,SDL_Renderer** renderer){
+int setupWindow(SDL_Window** window,SDL_Renderer** renderer,TTF_Font **font){
     if (SDL_Init(SDL_INIT_VIDEO) < 0) { // 
         printf("Erro ao inicializar SDL: %s\n", SDL_GetError());
         return 1;
@@ -36,9 +37,34 @@ int setupWindow(SDL_Window** window,SDL_Renderer** renderer){
         return 1;
     }
 
+    if (TTF_Init() < 0) { // 
+        printf("Erro ao inicializar as fontes: %s\n", SDL_GetError());
+        return 1;
+    }
+    *font = TTF_OpenFont("assets/font.ttf", 16);
+    if (!font){
+        printf("Erro ao carregar fonte: %s\n", TTF_GetError());
+    }
+
     *renderer = SDL_CreateRenderer(*window, -1, SDL_RENDERER_ACCELERATED);
     
     return 0;
+}
+
+void drawText(SDL_Renderer *renderer, TTF_Font *font,
+              char *text, int x, int y)
+{
+    SDL_Color color = {255,255,255};
+
+    SDL_Surface *surface = TTF_RenderText_Solid(font, text, color);
+    SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
+
+    SDL_Rect dest = {x, y, surface->w, surface->h};
+
+    SDL_RenderCopy(renderer, texture, NULL, &dest);
+
+    SDL_FreeSurface(surface);
+    SDL_DestroyTexture(texture);
 }
 
 void initTextures(SDL_Renderer *renderer, SDL_Texture** textures){
@@ -69,6 +95,7 @@ void initTextures(SDL_Renderer *renderer, SDL_Texture** textures){
         }
     }
 }
+
 void destroyTextures(SDL_Texture** textures){
     for (int i = 0; i < 12; i++){
         if (textures[i] != NULL){
@@ -77,7 +104,7 @@ void destroyTextures(SDL_Texture** textures){
     }
 }
 
-void drawBoard(SDL_Renderer *renderer, Cell cell[8][8])
+void drawBoard(SDL_Renderer *renderer, TTF_Font *font, Cell cell[8][8])
 {
     int margin = 40;
     int thickness = 2;
@@ -92,6 +119,20 @@ void drawBoard(SDL_Renderer *renderer, Cell cell[8][8])
         background_color[2],
         255
     );
+
+    // letras e numeros
+    char letter[2] = "A";
+    for(int i = 0; i < 8; i++){
+        letter[0] = 'A' + i;
+        drawText(renderer, font, letter, 100 + i*80, 700);
+    }
+
+    char number[2] = "8";
+
+    for(int i = 0; i < 8; i++){
+        number[0] = '8' - i;
+        drawText(renderer, font, number, 50, 100 + i*80);
+    }
 
     // pintando casas
     for (int row = 0; row < 8; row++){
@@ -184,7 +225,7 @@ int fillCircle(SDL_Renderer *prenderer, int x, int y, int radius,type_m type_m){
     } else if (type_m == CASTLING){
         SDL_SetRenderDrawColor(prenderer,25, 44, 252,255); 
     }
-    
+
     int offsetx, offsety, d;
     int status;
 

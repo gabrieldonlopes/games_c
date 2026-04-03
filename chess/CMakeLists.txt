@@ -5,6 +5,7 @@ set(CMAKE_C_STANDARD 11)
 
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
+find_package(SDL2_ttf REQUIRED)
 
 add_executable(chess
     src/chess.c
@@ -23,4 +24,5 @@ target_include_directories(chess PRIVATE
 target_link_libraries(chess
     SDL2::SDL2
     SDL2_image::SDL2_image
+    SDL2_ttf::SDL2_ttf
 )
