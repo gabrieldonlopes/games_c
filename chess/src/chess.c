@@ -33,7 +33,6 @@ int running = 1;
 SDL_Event event;
 
 void handleInput();
-void updateGame();
 void render();
 
 // usando variavel global fds
@@ -100,16 +99,14 @@ void handleInput(){
     }
 }
 
-void updateGame(){
-
-}
-
 void render(){
     // limpar tela
     SDL_SetRenderDrawColor(renderer, 200, 200, 200, 255);
     SDL_RenderClear(renderer);
-    // desenhar
+
+    // desenhar board
     drawBoard(renderer,font, cell);
+    
     // desenhar peças ocupadas
     for (int row = 0; row < 8; row++){
         for (int col = 0; col < 8; col++){
@@ -129,6 +126,7 @@ void render(){
             }
         }
     }
+
     // mostrar frame
     SDL_RenderPresent(renderer);
 }

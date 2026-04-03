@@ -41,7 +41,7 @@ int setupWindow(SDL_Window** window,SDL_Renderer** renderer,TTF_Font **font){
         printf("Erro ao inicializar as fontes: %s\n", SDL_GetError());
         return 1;
     }
-    *font = TTF_OpenFont("assets/font.ttf", 16);
+    *font = TTF_OpenFont("assets/font.ttf", 30);
     if (!font){
         printf("Erro ao carregar fonte: %s\n", TTF_GetError());
     }
@@ -54,7 +54,7 @@ int setupWindow(SDL_Window** window,SDL_Renderer** renderer,TTF_Font **font){
 void drawText(SDL_Renderer *renderer, TTF_Font *font,
               char *text, int x, int y)
 {
-    SDL_Color color = {255,255,255};
+    SDL_Color color = {5,5,5};
 
     SDL_Surface *surface = TTF_RenderText_Solid(font, text, color);
     SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
@@ -120,20 +120,6 @@ void drawBoard(SDL_Renderer *renderer, TTF_Font *font, Cell cell[8][8])
         255
     );
 
-    // letras e numeros
-    char letter[2] = "A";
-    for(int i = 0; i < 8; i++){
-        letter[0] = 'A' + i;
-        drawText(renderer, font, letter, 100 + i*80, 700);
-    }
-
-    char number[2] = "8";
-
-    for(int i = 0; i < 8; i++){
-        number[0] = '8' - i;
-        drawText(renderer, font, number, 50, 100 + i*80);
-    }
-
     // pintando casas
     for (int row = 0; row < 8; row++){
         for (int col = 0; col < 8; col++){
@@ -197,11 +183,27 @@ void drawBoard(SDL_Renderer *renderer, TTF_Font *font, Cell cell[8][8])
             margin + offset, margin + board_size
         );
 
-        // horizontais
+        // horizontais-
         SDL_RenderDrawLine(renderer,
             margin, margin + offset,
             margin + board_size, margin + offset
         );
+    }
+
+    // NOTE: codigo movido a gambiarra, hardcodado pra caralho
+
+    // letras e numeros
+    char letter[2] = "a";
+    for(int i = 0; i < 8; i++){
+        letter[0] = 'a' + i;
+        drawText(renderer,  font, letter, ((margin+cell_size/2)+cell_size*i)-12, (margin-30)/2);
+    }
+
+    char number[2] = "8";
+
+    for(int i = 0; i < 8; i++){
+        number[0] = '8' - i;
+        drawText(renderer, font, number, (margin-20)/2, ((margin+cell_size/2)+cell_size*i)-16);
     }
 }
 
