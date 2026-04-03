@@ -34,7 +34,11 @@ void handleMouseClick(Cell cell[8][8], int mouse_x, int mouse_y,
 
                         cell[row][col].oc = 1;
                         cell[row][col].piece = cell[piece_clicked[0]][piece_clicked[1]].piece;
-                        if (cell[row][col].piece.type == PAWN){
+                        
+                        if (cell[row][col].piece.type == PAWN || // peças que o primeiro movimento pode ser especial
+                            cell[row][col].piece.type == KING ||
+                            cell[row][col].piece.type == ROOK
+                        ){
                             cell[row][col].piece.first_move = 0;
                         }
 

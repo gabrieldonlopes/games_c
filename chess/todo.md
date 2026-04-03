@@ -5,4 +5,4 @@
 - logica de ganhador []
 - reset de jogo []
 - notação do xadrez [] 
-
+- logica de afogamento []
