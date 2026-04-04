@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-#define GRAVITY 60
+#define GRAVITY 500
 
 typedef struct {
     int x1, y1;

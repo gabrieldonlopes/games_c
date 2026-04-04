@@ -1,4 +1,6 @@
 #include "graph.h"
+#include "physics.h"
+#include "game.h"
 
 /* 
 --------------------------------------------------------
@@ -22,7 +24,18 @@ float delta;
 Uint32 frameStart;
 int frameTime;
 
-int player_position[2] = {WIDTH / 2, HEIGHT / 2};
+/* 
+    nota: possuo duas abordagens disponíveis para o sistema:
+        1. utilizar variavel normal em player e passar o endereço para as funções (stack)
+        2. utilizar ponteiro para player e usar malloc/free no final do programa (heap)
+
+    não entendo totalmente a diferença que existe entre essas duas abordagens, por isso 
+    estou usando a mais simples
+
+
+    o padrão que seguirei adiante é usar 
+*/
+player_s player;
 
 void handleInput();
 void render();
@@ -32,6 +45,10 @@ int main (int argc, char *argv[]){
     if(setupWindow(&window, &renderer)){
         return 1;
     }
+
+    // posição inicial
+    player.x = WIDTH / 2;
+    player.y = HEIGHT / 2; 
 
     last = SDL_GetTicks();
     while(running){
@@ -71,20 +88,18 @@ void render(){
     // desenhando coisas
     drawBackground(renderer);
     drawGround(renderer);
-    drawPlayer(renderer,player_position);
+    drawPlayer(renderer,&player);
 
     // mostrar frame
     SDL_RenderPresent(renderer);
 }
 
 void updateGame(){
-    int vy = 500; // pixels por segundo
-
     Uint32 now = SDL_GetTicks();
     delta = (now - last) / 1000.0f;
     last = now;
 
     // atualizando a posição do player
-    player_position[1] +=  vy * delta;
+    player.y +=  GRAVITY * delta;
 
 }

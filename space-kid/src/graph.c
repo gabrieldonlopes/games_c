@@ -77,7 +77,7 @@ void drawGround(SDL_Renderer *renderer){
     SDL_RenderFillRect(renderer,&ground_rect);
 }
 
-void drawPlayer(SDL_Renderer *renderer, int *player_position){
+void drawPlayer(SDL_Renderer *renderer, player_s *player){
     int player_size = 50;
     
 
@@ -88,6 +88,12 @@ void drawPlayer(SDL_Renderer *renderer, int *player_position){
         255
     );
 
-    SDL_Rect player_rect = {player_position[0], player_position[1], player_size / 2, player_size};
-    SDL_RenderFillRect(renderer,&player_rect);
+    SDL_Rect player_rect = {
+        player->x,
+        player->y, 
+        player_size / 2, 
+        player_size};
+        
+    player->rect = player_rect;
+    SDL_RenderFillRect(renderer, &player_rect);
 }
