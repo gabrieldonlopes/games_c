@@ -99,3 +99,34 @@ void drawPlayer(SDL_Renderer *renderer, player_s *player){
     player->rect = player_rect;
     SDL_RenderFillRect(renderer, &player_rect);
 }
+
+void drawFire(SDL_Renderer *renderer, player_s *player){
+    if(player->vy >= 0) return; // só quando estiver subindo
+
+    int player_base = player->rect.y + player->rect.h;
+    int center_x = player->rect.x + player->rect.w / 2;
+
+    int num_rects = (-player->vy) / 70;
+    if(num_rects > 8) num_rects = 8;
+    if(num_rects < 1) num_rects = 1;
+
+    int spacing = 5;     // distância entre retângulos
+    int width = 15;
+    int height = 3;
+
+    SDL_SetRenderDrawColor(renderer, 255, 140, 0, 255);
+
+    for(int i = 1; i <= num_rects; i++){
+        SDL_Rect r = {
+            center_x - width/2,
+            player_base + i * spacing,
+            width,
+            height
+        };
+
+        SDL_RenderFillRect(renderer, &r);
+
+        // próximo retângulo menor
+        width *= 0.75;
+    }
+}

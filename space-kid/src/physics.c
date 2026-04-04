@@ -29,7 +29,7 @@ int updatePlayerPosition(player_s *player, float delta, input *input_k){
     else if (*input_k == LEFT)
         player->vx = -200;
     else if (*input_k == UP)
-        player->vy = -200;
+        player->vy = -210;
     else if (*input_k == NONE)
         if (player->vx < 0) {
             player->vx += 10;

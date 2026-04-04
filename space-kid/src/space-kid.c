@@ -118,6 +118,7 @@ void render(){
     drawBackground(renderer);
     drawGround(renderer,&ground_rect);
     drawPlayer(renderer,&player);
+    drawFire(renderer, &player);
 
     // mostrar frame
     SDL_RenderPresent(renderer);
