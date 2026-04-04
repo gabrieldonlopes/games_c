@@ -17,10 +17,14 @@ int inBoard(int row, int col){
     return row >= 0 && row < 8 && col >= 0 && col < 8;
 }
 
-void initBoard(Cell cell[8][8],SDL_Texture** textures) {
+void resetGame(int* piece_cliked, color_p* player_turn,Cell board[8]){
+
+}
+
+void initBoard(Cell board[8][8],SDL_Texture** textures) {
     for (int row = 0; row < 8; row++){
         for (int col = 0; col < 8; col++){
-            cell[row][col].oc = 0;
+            board[row][col].oc = 0;
         }
     }
     
@@ -28,16 +32,16 @@ void initBoard(Cell cell[8][8],SDL_Texture** textures) {
     // pretas
     for (int col = 0; col < 8; col++) {
         // peoes
-        cell[1][col].oc = 1;
-        cell[1][col].piece.color = BLACK;
-        cell[1][col].piece.type = PAWN;
-        cell[1][col].piece.first_move = 1;
+        board[1][col].oc = 1;
+        board[1][col].piece.color = BLACK;
+        board[1][col].piece.type = PAWN;
+        board[1][col].piece.first_move = 1;
 
         
-        cell[0][col].oc = 1;
-        cell[0][col].piece.color = BLACK;
-        cell[0][col].piece.type = 0 + black_row[col];
-        cell[0][col].piece.first_move = 1;
+        board[0][col].oc = 1;
+        board[0][col].piece.color = BLACK;
+        board[0][col].piece.type = 0 + black_row[col];
+        board[0][col].piece.first_move = 1;
 
     }
 
@@ -46,16 +50,16 @@ void initBoard(Cell cell[8][8],SDL_Texture** textures) {
     for (int col = 0; col < 8; col++)
     {
         // peoes
-        cell[6][col].oc = 1;
-        cell[6][col].piece.color = WHITE;
-        cell[6][col].piece.type = PAWN;
-        cell[6][col].piece.first_move = 1;
+        board[6][col].oc = 1;
+        board[6][col].piece.color = WHITE;
+        board[6][col].piece.type = PAWN;
+        board[6][col].piece.first_move = 1;
         
         // outras pecas
-        cell[7][col].oc = 1;
-        cell[7][col].piece.type = white_row[col];
-        cell[7][col].piece.color = WHITE;
-        cell[7][col].piece.first_move = 1;
+        board[7][col].oc = 1;
+        board[7][col].piece.type = white_row[col];
+        board[7][col].piece.color = WHITE;
+        board[7][col].piece.first_move = 1;
 
     }
 }

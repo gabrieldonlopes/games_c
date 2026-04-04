@@ -38,7 +38,7 @@ typedef struct {
 } Cell;
 
 int inBoard(int row, int col);
-void initBoard(Cell cell[8][8], SDL_Texture **textures);
+void initBoard(Cell board[8][8], SDL_Texture **textures);
 void showPossibleMoves(Cell board[8][8], int row, int col);
 Piece emptyPiece();
 

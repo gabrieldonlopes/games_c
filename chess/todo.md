@@ -1,6 +1,6 @@
 # todo: 
 - movimentos do rei [x]
-- logica do roque (longo e curto) []
+- logica do roque (longo e curto) [x]
 - xeque e xeque-mat []
 - numeros e letras [x]
 - reset de jogo [x]

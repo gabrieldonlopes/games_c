@@ -21,7 +21,7 @@
 SDL_Window *window = NULL; // janela base
 SDL_Renderer *renderer = NULL; // renderizador base
 TTF_Font *font = NULL;         // fontes
-Cell cell[8][8];
+Cell board[8][8];
 SDL_Texture* textures [12];
 
 // nota: sei que é melhor usar enum, mas tenho preguiça de adaptar 
@@ -49,12 +49,11 @@ int main(int argc, char *argv[]){
     IMG_Init(IMG_INIT_PNG);
     initTextures(renderer, textures);
 
-    initBoard(cell,textures);  
+    initBoard(board,textures);  
 
     while (running)
     {
         handleInput();
-        updateGame();
         render();
     }
 
@@ -75,25 +74,25 @@ void handleInput(){
         else if (event.type == SDL_MOUSEBUTTONDOWN){
             int mouse_x = event.button.x;
             int mouse_y = event.button.y;
-            handleMouseClick(cell, mouse_x, mouse_y,&piece_select,piece_clicked,&player_turn);
+            handleMouseClick(board, mouse_x, mouse_y,&piece_select,piece_clicked,&player_turn);
         }
         else if (event.type == SDL_KEYDOWN){
             if (event.key.keysym.scancode == SDL_SCANCODE_D){
-                debugBoard(cell);
+                debugBoard(board);
             }
 
             if (event.key.keysym.scancode == SDL_SCANCODE_M){
-                debugMoves(cell);
+                debugMoves(board);
             }
             if (event.key.keysym.scancode == SDL_SCANCODE_C){
-                debugCell(cell[piece_clicked[0]][piece_clicked[1]]);
+                debugCell(board[piece_clicked[0]][piece_clicked[1]]);
             }
 
             // reset da partida
             if (event.key.keysym.scancode == SDL_SCANCODE_R){
                 piece_select = 0;
                 player_turn = WHITE;
-                initBoard(cell,textures);  
+                initBoard(board,textures);  
             }
         }
     }
@@ -105,24 +104,24 @@ void render(){
     SDL_RenderClear(renderer);
 
     // desenhar board
-    drawBoard(renderer,font, cell);
+    drawBoard(renderer,font, board);
     
     // desenhar peças ocupadas
     for (int row = 0; row < 8; row++){
         for (int col = 0; col < 8; col++){
-            if(cell[row][col].oc){
+            if(board[row][col].oc){
                 // pegando a textura da peça baseado no seu tipo e cor
-                int index = cell[row][col].piece.type * 2 + cell[row][col].piece.color;
+                int index = board[row][col].piece.type * 2 + board[row][col].piece.color;
                 drawPiece(renderer,textures[index],
-               cell[row][col].cx,
-               cell[row][col].cy);
+               board[row][col].cx,
+               board[row][col].cy);
             }
-            if (cell[row][col].can_move&&cell[row][col].oc){ // casa onde uma peça come a outra
-                drawSelectionBox(renderer, cell[row][col]);
-            } else if (cell[row][col].can_move){  // casa onde uma peça pode se movimentar
-                fillCircle(renderer, cell[row][col].cx, cell[row][col].cy, 10, MOVE);
-            } else if (cell[row][col].can_castling){ // casa onde uma peça pode fazer castling
-                fillCircle(renderer, cell[row][col].cx, cell[row][col].cy, 10, CASTLING);
+            if (board[row][col].can_move&&board[row][col].oc){ // casa onde uma peça come a outra
+                drawSelectionBox(renderer, board[row][col]);
+            } else if (board[row][col].can_move){  // casa onde uma peça pode se movimentar
+                fillCircle(renderer, board[row][col].cx, board[row][col].cy, 10, MOVE);
+            } else if (board[row][col].can_castling){ // casa onde uma peça pode fazer castling
+                fillCircle(renderer, board[row][col].cx, board[row][col].cy, 10, CASTLING);
             }
         }
     }

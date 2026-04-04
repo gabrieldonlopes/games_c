@@ -104,7 +104,7 @@ void destroyTextures(SDL_Texture** textures){
     }
 }
 
-void drawBoard(SDL_Renderer *renderer, TTF_Font *font, Cell cell[8][8])
+void drawBoard(SDL_Renderer *renderer, TTF_Font *font, Cell board[8][8])
 {
     int margin = 40;
     int thickness = 2;
@@ -146,18 +146,18 @@ void drawBoard(SDL_Renderer *renderer, TTF_Font *font, Cell cell[8][8])
             };
 
             // inicializando board
-            cell[row][col].cx = cell_rect.x + cell_rect.w / 2;
-            cell[row][col].cy = cell_rect.y + cell_rect.h / 2;
+            board[row][col].cx = cell_rect.x + cell_rect.w / 2;
+            board[row][col].cy = cell_rect.y + cell_rect.h / 2;
 
-            cell[row][col].x1 = cell_rect.x;
-            cell[row][col].y1 = cell_rect.y;
-            cell[row][col].x2 = cell_rect.x + cell_rect.w;
-            cell[row][col].y2 = cell_rect.y + cell_rect.h;
+            board[row][col].x1 = cell_rect.x;
+            board[row][col].y1 = cell_rect.y;
+            board[row][col].x2 = cell_rect.x + cell_rect.w;
+            board[row][col].y2 = cell_rect.y + cell_rect.h;
 
             SDL_RenderFillRect(renderer, &cell_rect);
             
             // testando se deu tudo certo
-            //drawCenter(renderer, cell[row][col].cx, cell[row][col].cy);
+            //drawCenter(renderer, board[row][col].cx, board[row][col].cy);
         }
     }
 

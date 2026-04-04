@@ -11,45 +11,45 @@
 */
 
 // caso o usario já tenha se movido ou clicado em outra peça
-void resetCanMove(Cell cell[8][8]){
+void resetCanMove(Cell board[8][8]){
     for (int row = 0; row < 8; row++){
         for (int col = 0; col < 8;col++){
-            cell[row][col].can_move = 0;
-            cell[row][col].can_castling = 0;
+            board[row][col].can_move = 0;
+            board[row][col].can_castling = 0;
         }
     }
 }
 
-void handleMouseClick(Cell cell[8][8], int mouse_x, int mouse_y,
+void handleMouseClick(Cell board[8][8], int mouse_x, int mouse_y,
                       int* piece_selected, int* piece_clicked,color_p* player_turn)
 {
     for (int row = 0; row < 8; row++){
         for (int col = 0; col < 8; col++){
-            if(mouse_x > cell[row][col].x1 && mouse_x < cell[row][col].x2 &&
-               mouse_y > cell[row][col].y1 && mouse_y < cell[row][col].y2){
+            if(mouse_x > board[row][col].x1 && mouse_x < board[row][col].x2 &&
+               mouse_y > board[row][col].y1 && mouse_y < board[row][col].y2){
                 
                 // CLICOU EM UMA CÉLULA
                 if (*piece_selected){
                     // tentar mover peça
-                    if(cell[row][col].can_move || cell[row][col].can_castling){
+                    if(board[row][col].can_move || board[row][col].can_castling){
 
-                        cell[row][col].oc = 1;
-                        cell[row][col].piece = cell[piece_clicked[0]][piece_clicked[1]].piece;
+                        board[row][col].oc = 1;
+                        board[row][col].piece = board[piece_clicked[0]][piece_clicked[1]].piece;
                         
-                        if (cell[row][col].piece.type == PAWN || // peças que o primeiro movimento pode ser especial
-                            cell[row][col].piece.type == KING ||
-                            cell[row][col].piece.type == ROOK
+                        if (board[row][col].piece.type == PAWN || // peças que o primeiro movimento pode ser especial
+                            board[row][col].piece.type == KING ||
+                            board[row][col].piece.type == ROOK
                         ){
-                            cell[row][col].piece.first_move = 0;
+                            board[row][col].piece.first_move = 0;
                         }
 
-                        cell[piece_clicked[0]][piece_clicked[1]].oc = 0;
-                        cell[piece_clicked[0]][piece_clicked[1]].piece = emptyPiece();
+                        board[piece_clicked[0]][piece_clicked[1]].oc = 0;
+                        board[piece_clicked[0]][piece_clicked[1]].piece = emptyPiece();
                         
 
                         // verificar se foi roque
-                        if (cell[row][col].can_castling && 
-                            cell[row][col].piece.type == KING) {
+                        if (board[row][col].can_castling && 
+                            board[row][col].piece.type == KING) {
 
                             int oldCol = piece_clicked[1];
                             int newCol = col;
@@ -60,24 +60,24 @@ void handleMouseClick(Cell cell[8][8], int mouse_x, int mouse_y,
                                 int rookCol = 7; // coluna da torre
                                 int newRookCol = newCol - 1;
 
-                                cell[row][newRookCol].oc = 1;
-                                cell[row][newRookCol].piece = cell[row][rookCol].piece;
-                                cell[row][newRookCol].piece.first_move = 0;
+                                board[row][newRookCol].oc = 1;
+                                board[row][newRookCol].piece = board[row][rookCol].piece;
+                                board[row][newRookCol].piece.first_move = 0;
 
-                                cell[row][rookCol].oc = 0;
-                                cell[row][rookCol].piece = emptyPiece();
+                                board[row][rookCol].oc = 0;
+                                board[row][rookCol].piece = emptyPiece();
                             }
                             // roque longo (rei foi para a esquerda)
                             else {
                                 int rookCol = 0;
                                 int newRookCol = newCol + 1;
 
-                                cell[row][newRookCol].oc = 1;
-                                cell[row][newRookCol].piece = cell[row][rookCol].piece;
-                                cell[row][newRookCol].piece.first_move = 0;
+                                board[row][newRookCol].oc = 1;
+                                board[row][newRookCol].piece = board[row][rookCol].piece;
+                                board[row][newRookCol].piece.first_move = 0;
 
-                                cell[row][rookCol].oc = 0;
-                                cell[row][rookCol].piece = emptyPiece();
+                                board[row][rookCol].oc = 0;
+                                board[row][rookCol].piece = emptyPiece();
                             }
                         }
 
@@ -85,17 +85,17 @@ void handleMouseClick(Cell cell[8][8], int mouse_x, int mouse_y,
                         *player_turn = (*player_turn == WHITE) ? BLACK : WHITE; 
                     }
 
-                    resetCanMove(cell);
+                    resetCanMove(board);
                     *piece_selected = 0;
                     return;
                 }
                 else {
                     // selecionar peça
-                    if(cell[row][col].oc){
-                        if(*player_turn != cell[row][col].piece.color)
+                    if(board[row][col].oc){
+                        if(*player_turn != board[row][col].piece.color)
                             return;
 
-                        showPossibleMoves(cell, row, col);
+                        showPossibleMoves(board, row, col);
                         piece_clicked[0] = row;
                         piece_clicked[1] = col;
                         *piece_selected = 1;
