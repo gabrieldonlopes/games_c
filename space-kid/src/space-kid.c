@@ -35,7 +35,9 @@ int frameTime;
 
     o padrão que seguirei adiante é usar 
 */
+
 player_s player;
+SDL_Rect ground_rect;
 
 void handleInput();
 void render();
@@ -87,7 +89,7 @@ void render(){
 
     // desenhando coisas
     drawBackground(renderer);
-    drawGround(renderer);
+    drawGround(renderer,&ground_rect);
     drawPlayer(renderer,&player);
 
     // mostrar frame
@@ -99,7 +101,11 @@ void updateGame(){
     delta = (now - last) / 1000.0f;
     last = now;
 
-    // atualizando a posição do player
-    player.y +=  GRAVITY * delta;
+    updatePlayerPosition(&player, delta);
 
+    // colisão com chão
+    if(checkCollision(&player.rect, &ground_rect)){
+        player.y = ground_rect.y - player.rect.h;
+        player.vy = 0;
+    }
 }

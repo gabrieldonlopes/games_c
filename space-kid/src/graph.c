@@ -63,18 +63,20 @@ void drawBackground(SDL_Renderer *renderer){
     SDL_RenderFillRect(renderer,&background_rect);
 }
 
-void drawGround(SDL_Renderer *renderer){
+void drawGround(SDL_Renderer *renderer, SDL_Rect* ground_rect){
     int ground_y = HEIGHT / 4;
   
     SDL_SetRenderDrawColor(renderer,
-        ground_color[0],
+        ground_color[0], 
         ground_color[1],
         ground_color[2],
         255
     );
 
-    SDL_Rect ground_rect = {0, WIDTH-ground_y, WIDTH, ground_y};
-    SDL_RenderFillRect(renderer,&ground_rect);
+    SDL_Rect ground = {0, WIDTH-ground_y, WIDTH, ground_y};
+    *ground_rect = ground;
+
+    SDL_RenderFillRect(renderer,&ground);
 }
 
 void drawPlayer(SDL_Renderer *renderer, player_s *player){
@@ -93,7 +95,7 @@ void drawPlayer(SDL_Renderer *renderer, player_s *player){
         player->y, 
         player_size / 2, 
         player_size};
-        
+
     player->rect = player_rect;
     SDL_RenderFillRect(renderer, &player_rect);
 }

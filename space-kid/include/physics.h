@@ -2,12 +2,12 @@
 #define PHYSICS_H
 
 #include <stdio.h>
+#include <SDL2/SDL.h>
+#include "game.h"
 
 #define GRAVITY 500
 
-typedef struct {
-    int x1, y1;
-    int x2, y2;
-} hit_box;
+int updatePlayerPosition(player_s *player, float delta);
+int checkCollision(SDL_Rect *a, SDL_Rect *b);
 
 #endif
