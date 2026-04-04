@@ -20,8 +20,8 @@ void resetCanMove(Cell board[8][8]){
     }
 }
 
-void handleMouseClick(Cell board[8][8], int mouse_x, int mouse_y,
-                      int* piece_selected, int* piece_clicked,color_p* player_turn)
+void handleMouseClick(SDL_Window *window,Cell board[8][8], int mouse_x, int mouse_y,
+                      int* piece_selected, int* piece_clicked,color_p* player_turn,int*game_finished)
 {
     for (int row = 0; row < 8; row++){
         for (int col = 0; col < 8; col++){
@@ -32,6 +32,27 @@ void handleMouseClick(Cell board[8][8], int mouse_x, int mouse_y,
                 if (*piece_selected){
                     // tentar mover peça
                     if(board[row][col].can_move || board[row][col].can_castling){
+
+                        if (board[row][col].piece.type==KING){
+                            printf("ganhou!");
+                            char *color_str[] = {
+                                "WHITE",
+                                "BLACK"};
+
+                            char message[100];
+
+                            snprintf(message, sizeof(message),
+                                    "Peças %s ganharam",
+                                    color_str[board[row][col].piece.color]);
+
+                            SDL_ShowSimpleMessageBox(
+                                SDL_MESSAGEBOX_INFORMATION,
+                                "Xequemat",
+                                message,
+                                window
+                            );
+                            *game_finished = 1;
+                        }
 
                         board[row][col].oc = 1;
                         board[row][col].piece = board[piece_clicked[0]][piece_clicked[1]].piece;
