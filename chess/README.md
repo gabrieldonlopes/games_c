@@ -5,6 +5,9 @@
 
 Xadrez completo e funcional com interface gráfica e lógica de debug.
 
+> Nota: apenas a estrutura base do jogo está pronta, toda a lógica de bloqueio de movimentos, notação algebrica ainda não foi feita.
+Algum dia posso completar esse projeto (quem sabe até desenvolvendo uma IA). Mas a base tá aqui. 
+
 ##  Headers utilizadas
 - SDL.h
 - SDL_Image.h
