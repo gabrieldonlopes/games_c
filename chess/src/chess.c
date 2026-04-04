@@ -90,9 +90,7 @@ void handleInput(){
 
             // reset da partida
             if (event.key.keysym.scancode == SDL_SCANCODE_R){
-                piece_select = 0;
-                player_turn = WHITE;
-                initBoard(board,textures);  
+                resetGame(textures, &piece_select, &player_turn, board);
             }
         }
     }

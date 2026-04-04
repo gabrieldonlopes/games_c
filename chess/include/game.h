@@ -38,6 +38,7 @@ typedef struct {
 } Cell;
 
 int inBoard(int row, int col);
+void resetGame(SDL_Texture** textures, int* piece_select, color_p* player_turn,Cell board[8][8]);
 void initBoard(Cell board[8][8], SDL_Texture **textures);
 void showPossibleMoves(Cell board[8][8], int row, int col);
 Piece emptyPiece();

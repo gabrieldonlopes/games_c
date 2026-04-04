@@ -17,8 +17,10 @@ int inBoard(int row, int col){
     return row >= 0 && row < 8 && col >= 0 && col < 8;
 }
 
-void resetGame(int* piece_cliked, color_p* player_turn,Cell board[8]){
-
+void resetGame(SDL_Texture** textures, int* piece_select, color_p* player_turn,Cell board[8][8]){
+    *piece_select = 0;
+    *player_turn = WHITE;
+    initBoard(board,textures); 
 }
 
 void initBoard(Cell board[8][8],SDL_Texture** textures) {
