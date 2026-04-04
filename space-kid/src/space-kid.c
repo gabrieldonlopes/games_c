@@ -37,6 +37,7 @@ int frameTime;
 */
 
 player_s player;
+input input_k;
 SDL_Rect ground_rect;
 
 void handleInput();
@@ -78,6 +79,32 @@ void handleInput(){
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT) {
             running = 0;
+
+        } else if (event.type == SDL_KEYDOWN){
+            if (event.key.keysym.scancode == SDL_SCANCODE_RIGHT){
+                input_k = RIGHT;
+            }
+
+            if (event.key.keysym.scancode == SDL_SCANCODE_LEFT){
+                input_k = LEFT;
+            }
+
+            if (event.key.keysym.scancode == SDL_SCANCODE_UP){
+                input_k = UP;
+            }
+
+        } else if (event.type == SDL_KEYUP){
+            if (event.key.keysym.scancode == SDL_SCANCODE_RIGHT){
+                input_k = NONE;
+            }
+
+            if (event.key.keysym.scancode == SDL_SCANCODE_LEFT){
+                input_k = NONE;
+            }
+
+            if (event.key.keysym.scancode == SDL_SCANCODE_UP){
+                input_k = NONE;
+            }
         }
     }
 }
@@ -101,11 +128,14 @@ void updateGame(){
     delta = (now - last) / 1000.0f;
     last = now;
 
-    updatePlayerPosition(&player, delta);
-
+    updatePlayerPosition(&player, delta,&input_k);
     // colisão com chão
     if(checkCollision(&player.rect, &ground_rect)){
         player.y = ground_rect.y - player.rect.h;
         player.vy = 0;
+
+
+        // atualizar rect de novo após corrigir posição
+        player.rect.y = player.y;
     }
 }

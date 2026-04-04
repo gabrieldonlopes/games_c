@@ -19,12 +19,32 @@ int checkCollision(SDL_Rect *a, SDL_Rect *b){
             a->y + a->h > b->y);
 }
 
-int updatePlayerPosition(player_s *player, float delta){
+int updatePlayerPosition(player_s *player, float delta, input *input_k){
     // gravidade
     player->vy += GRAVITY * delta;
 
-    // mover
+    // movimento horizontal
+    if (*input_k == RIGHT)
+        player->vx = 200;
+    else if (*input_k == LEFT)
+        player->vx = -200;
+    else if (*input_k == UP)
+        player->vy = -200;
+    else if (*input_k == NONE)
+        if (player->vx < 0) {
+            player->vx += 10;
+        }
+        else if (player->vx > 0)
+        {
+            player->vx -= 10;
+        }
+        else
+        {
+            player->vx = 0;
+        }
+        
     player->y += player->vy * delta;
+    player->x += player->vx * delta;
 
     // atualizar rect
     player->rect.x = player->x;
