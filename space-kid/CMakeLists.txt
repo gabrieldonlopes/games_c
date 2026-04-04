@@ -8,6 +8,7 @@ find_package(SDL2 REQUIRED)
 add_executable(space-kid
     src/space-kid.c
     src/graph.c
+    src/physics.c
 )
 
 target_include_directories(space-kid PRIVATE
