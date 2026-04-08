@@ -29,26 +29,30 @@ void initPlataforms(Plataform plat[MAX_PLATFORMS]){
     plat[i++].screen = 0;
     
     // c
-    plat[i].rect = (SDL_Rect){400, HEIGHT - 200, 200, 100};
+    plat[i].rect = (SDL_Rect){400, HEIGHT - 200, 200, 200};
     plat[i++].screen = 0;
 
     // screen 2
 
     // d 
-    plat[i].rect = (SDL_Rect){0, HEIGHT - 300, 150, 100};
-    plat[i++].screen = 1;
+    plat[i].rect = (SDL_Rect){0, HEIGHT - 200, 100, 200};
+    plat[i++].screen = WIDTH;
 
     // e
-    plat[i].rect = (SDL_Rect){100, HEIGHT - 200, 80, 40};
-    plat[i++].screen = 1;
+    plat[i].rect = (SDL_Rect){200, HEIGHT - 80, 50, 80};
+    plat[i++].screen = WIDTH;
 
     // f
-    plat[i].rect = (SDL_Rect){0, HEIGHT - 100, 180, 100};
-    plat[i++].screen = 1;
+    plat[i].rect = (SDL_Rect){300, HEIGHT - 270, 50, 270};
+    plat[i++].screen = WIDTH;
 
     // g
-    plat[i].rect = (SDL_Rect){300, HEIGHT - 180, 120, 60};
-    plat[i++].screen = 1;
+    plat[i].rect = (SDL_Rect){300, 0, 50, 270};
+    plat[i++].screen = WIDTH;
+
+    // l
+    plat[i].rect = (SDL_Rect){400, HEIGHT - 200, 200, 200};
+    plat[i++].screen = WIDTH;
 }
 
 
@@ -109,7 +113,7 @@ void drawGround(SDL_Renderer *renderer, Plataform plat[MAX_PLATFORMS],int screen
 
     for (int i = 0; i < MAX_PLATFORMS;i++)
     {
-        if(plat[i].screen == screen){
+        if(plat[i].screen == screen){ // renderizando apenas plataformas que estão na tela atual
             SDL_RenderFillRect(renderer, &plat[i].rect);
         }
     }
