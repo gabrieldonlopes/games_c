@@ -64,6 +64,7 @@ int main (int argc, char *argv[]){
     // posição inicial
     player.x = WIDTH / 2;
     player.y = HEIGHT / 2;
+    player.fuel = FUEL;
 
     screen = 0;
 

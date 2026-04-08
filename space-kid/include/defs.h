@@ -8,5 +8,5 @@
 #define HEIGHT 600
 
 #define GRAVITY 500
-
+#define FUEL 100
 #endif

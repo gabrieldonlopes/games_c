@@ -26,7 +26,7 @@ typedef struct{
     SDL_Rect rect;
 
     int on_ground;
-    int is_alive;
+    int fuel;
 } player_s;
 
 void changeScreen(player_s *player, int *screen);

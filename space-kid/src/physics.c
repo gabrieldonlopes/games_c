@@ -53,6 +53,9 @@ void collisionPlatY(player_s *player, Plataform plats[MAX_PLATFORMS], int count,
 
             if (player->vy > 0) { // descendo
                 player->y = plats[i].rect.y - player->rect.h;
+
+                player->fuel = FUEL; // caso o player toque no chão o fuel recarrega
+                
             } else if (player->vy < 0) { // subindo
                 player->y = plats[i].rect.y + plats[i].rect.h;
             }
@@ -70,9 +73,12 @@ int updatePlayerPosition(player_s *player, float delta, input *input_k,Plataform
         player->vx = 200;
     else if (*input_k == LEFT)
         player->vx = -200;
-    else if (*input_k == UP)
-        player->vy = -210;
-    else if (*input_k == NONE) {
+    else if (*input_k == UP && player->fuel > 0){
+        // caso o player tenha combustível
+        player->vy = -210; 
+    }
+    else if (*input_k == NONE)
+    {
         if (player->vx < 0)
             player->vx += 10;
         else if (player->vx > 0)
