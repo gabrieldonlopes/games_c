@@ -1,5 +1,16 @@
 #include "game.h"
 
+/* 
+--------------------------------------------------------
+# game.c
+#
+# Description: conjunto de funções de tratamento do estado do jogo
+# Autor: gdon - gabriellopes.zip@gmail.com
+# Version: 1.0
+# Data: 
+--------------------------------------------------------
+*/
+
 void changeScreen(player_s *player,int *screen){
     
     // indo para direita

@@ -15,47 +15,6 @@ const int background_color[3] = {3, 9, 43};
 const int ground_color[3] = {79, 62, 33};
 const int player_color[3] = {7, 82, 3};
 
-void initPlataforms(Plataform plat[MAX_PLATFORMS]){
-    int i = 0;
-
-    // screen 1
-
-    // a
-    plat[i].rect = (SDL_Rect){0, HEIGHT - 100, 200, 100};
-    plat[i++].screen = 0;
-
-    // b
-    plat[i].rect = (SDL_Rect){250, HEIGHT - 100, 100, 100};
-    plat[i++].screen = 0;
-    
-    // c
-    plat[i].rect = (SDL_Rect){400, HEIGHT - 200, 200, 200};
-    plat[i++].screen = 0;
-
-    // screen 2
-
-    // d 
-    plat[i].rect = (SDL_Rect){0, HEIGHT - 200, 100, 200};
-    plat[i++].screen = WIDTH;
-
-    // e
-    plat[i].rect = (SDL_Rect){200, HEIGHT - 80, 50, 80};
-    plat[i++].screen = WIDTH;
-
-    // f
-    plat[i].rect = (SDL_Rect){300, HEIGHT - 270, 50, 270};
-    plat[i++].screen = WIDTH;
-
-    // g
-    plat[i].rect = (SDL_Rect){300, 0, 50, 270};
-    plat[i++].screen = WIDTH;
-
-    // l
-    plat[i].rect = (SDL_Rect){400, HEIGHT - 200, 200, 200};
-    plat[i++].screen = WIDTH;
-}
-
-
 int setupWindow(SDL_Window** window,SDL_Renderer** renderer){
     if (SDL_Init(SDL_INIT_VIDEO) < 0) { // 
         printf("Erro ao inicializar SDL: %s\n", SDL_GetError());

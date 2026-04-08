@@ -10,6 +10,7 @@ add_executable(space-kid
     src/graph.c
     src/physics.c
     src/game.c
+    src/map.c
 )
 
 target_include_directories(space-kid PRIVATE
