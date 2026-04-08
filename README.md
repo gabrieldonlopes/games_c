@@ -14,7 +14,7 @@ Estes projetos foram desenvolvidos com finalidade de entretenimento e aprendizad
 |------|-----------|--------|
 | [**Jogo da Velha**](./jogo-da-velha) | Jogo da velha para dois jogadores| ✅ Funcional |
 | [**Xadrez (chess)**](./chess) | Jogo de xadrez completo com movimentação de peças e notação algébrica | ✅ Funcional |
-| [**space kid**](./chess) | Jogo de plataforma 2D | Em construção |
+| [**space kid**](./space-kid) | Jogo de plataforma 2D | Em construção |
 
 
 ## Como Executar
