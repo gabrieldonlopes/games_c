@@ -1,7 +1,9 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "defs.h"
 #include <SDL2/SDL.h>
+
 typedef enum
 {
     NONE,
@@ -26,5 +28,7 @@ typedef struct{
     int on_ground;
     int is_alive;
 } player_s;
+
+void changeScreen(player_s *player, int *screen);
 
 #endif
