@@ -30,5 +30,6 @@ typedef struct{
 } player_s;
 
 void changeScreen(player_s *player, int *screen);
+void checkDeathByFall(player_s *player, int *running, SDL_Window *window);
 
 #endif

@@ -31,3 +31,15 @@ void changeScreen(player_s *player,int *screen){
         player->rect.x = player->x;
     }
 }
+
+void checkDeathByFall(player_s *player, int *running,SDL_Window *window){
+    if (player->rect.y >= HEIGHT) {
+        SDL_ShowSimpleMessageBox(
+        SDL_MESSAGEBOX_INFORMATION,
+            "Se fudeu",
+            "Caiu para fora do mundo!",
+            window
+        );
+        *running = 0;
+    }
+}

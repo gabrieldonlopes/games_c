@@ -144,5 +144,6 @@ void updateGame(){
     last = now;
 
     updatePlayerPosition(&player, delta,&input_k,plat,MAX_PLATFORMS,screen);
+    checkDeathByFall(&player, &running,window);
     changeScreen(&player, &screen);
 }
