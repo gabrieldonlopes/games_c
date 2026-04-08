@@ -1,6 +1,7 @@
 #include "graph.h"
 #include "physics.h"
 #include "game.h"
+#include "defs.h"
 
 /* 
 --------------------------------------------------------
@@ -32,13 +33,22 @@ int frameTime;
     não entendo totalmente a diferença que existe entre essas duas abordagens, por isso 
     estou usando a mais simples
 
-
     o padrão que seguirei adiante é usar 
 */
 
 player_s player;
 input input_k;
 SDL_Rect ground_rect;
+Plataform plat [MAX_PLATFORMS]; // buffer contínuo que guarda todas plataformas
+
+/*
+    nota: como vou implementar um número prefixado de plataformas (vale pensar no futuro criar um gerador de 
+    mapas automaticos tmb) posso guardar o endereço inicio das plataformas de determinada tela
+*/
+
+// representa a tela, cada plataforma está mapeada para uma tela diferente
+// ao passar ou voltar a tela esse valor é acrescido ou decrescido com WIDTH 
+int screen;  
 
 void handleInput();
 void render();
@@ -49,9 +59,13 @@ int main (int argc, char *argv[]){
         return 1;
     }
 
+    initPlataforms(plat);
+
     // posição inicial
     player.x = WIDTH / 2;
-    player.y = HEIGHT / 2; 
+    player.y = HEIGHT / 2;
+
+    screen = 0;
 
     last = SDL_GetTicks();
     while(running){
@@ -116,7 +130,7 @@ void render(){
 
     // desenhando coisas
     drawBackground(renderer);
-    drawGround(renderer,&ground_rect);
+    drawGround(renderer,plat,screen);
     drawPlayer(renderer,&player);
     drawFire(renderer, &player);
 
@@ -129,14 +143,5 @@ void updateGame(){
     delta = (now - last) / 1000.0f;
     last = now;
 
-    updatePlayerPosition(&player, delta,&input_k);
-    // colisão com chão
-    if(checkCollision(&player.rect, &ground_rect)){
-        player.y = ground_rect.y - player.rect.h;
-        player.vy = 0;
-
-
-        // atualizar rect de novo após corrigir posição
-        player.rect.y = player.y;
-    }
+    updatePlayerPosition(&player, delta,&input_k,plat,MAX_PLATFORMS,screen);
 }

@@ -15,6 +15,41 @@ const int background_color[3] = {3, 9, 43};
 const int ground_color[3] = {79, 62, 33};
 const int player_color[3] = {7, 82, 3};
 
+void initPlataforms(Plataform plat[MAX_PLATFORMS]){
+    int i = 0;
+
+    // screen 1
+
+    // a
+    plat[i].rect = (SDL_Rect){0, HEIGHT - 100, 200, 100};
+    plat[i++].screen = 0;
+
+    // b
+    plat[i].rect = (SDL_Rect){250, HEIGHT - 100, 100, 100};
+    plat[i++].screen = 0;
+    
+    // c
+    plat[i].rect = (SDL_Rect){400, HEIGHT - 200, 200, 100};
+    plat[i++].screen = 0;
+
+    // screen 2
+
+    // d 
+    plat[i].rect = (SDL_Rect){0, HEIGHT - 300, 150, 100};
+    plat[i++].screen = 1;
+
+    // e
+    plat[i].rect = (SDL_Rect){100, HEIGHT - 200, 80, 40};
+    plat[i++].screen = 1;
+
+    // f
+    plat[i].rect = (SDL_Rect){0, HEIGHT - 100, 180, 100};
+    plat[i++].screen = 1;
+
+    // g
+    plat[i].rect = (SDL_Rect){300, HEIGHT - 180, 120, 60};
+    plat[i++].screen = 1;
+}
 
 
 int setupWindow(SDL_Window** window,SDL_Renderer** renderer){
@@ -63,8 +98,7 @@ void drawBackground(SDL_Renderer *renderer){
     SDL_RenderFillRect(renderer,&background_rect);
 }
 
-void drawGround(SDL_Renderer *renderer, SDL_Rect* ground_rect){
-    int ground_y = HEIGHT / 4;
+void drawGround(SDL_Renderer *renderer, Plataform plat[MAX_PLATFORMS],int screen){
   
     SDL_SetRenderDrawColor(renderer,
         ground_color[0], 
@@ -73,10 +107,12 @@ void drawGround(SDL_Renderer *renderer, SDL_Rect* ground_rect){
         255
     );
 
-    SDL_Rect ground = {0, WIDTH-ground_y, WIDTH, ground_y};
-    *ground_rect = ground;
-
-    SDL_RenderFillRect(renderer,&ground);
+    for (int i = 0; i < MAX_PLATFORMS;i++)
+    {
+        if(plat[i].screen == screen){
+            SDL_RenderFillRect(renderer, &plat[i].rect);
+        }
+    }
 }
 
 void drawPlayer(SDL_Renderer *renderer, player_s *player){

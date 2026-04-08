@@ -2,7 +2,6 @@
 #define GAME_H
 
 #include <SDL2/SDL.h>
-
 typedef enum
 {
     NONE,
@@ -12,6 +11,11 @@ typedef enum
     LEFT 
     
 } input;
+
+typedef struct{
+    SDL_Rect rect;
+    int screen;
+} Plataform;
 
 typedef struct{
     int x, y;
