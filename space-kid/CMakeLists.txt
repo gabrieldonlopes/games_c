@@ -2,7 +2,9 @@ cmake_minimum_required(VERSION 3.10)
 project(space-kid C)
 
 set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_STANDARD_REQUIRED ON)
 
+# Método mais simples: deixa o CMake encontrar automaticamente
 find_package(SDL2 REQUIRED)
 
 add_executable(space-kid
@@ -19,5 +21,22 @@ target_include_directories(space-kid PRIVATE
 )
 
 target_link_libraries(space-kid
-    SDL2::SDL2
+    ${SDL2_LIBRARIES}
 )
+
+# Apenas copia DLL no Windows se existir
+if(WIN32)
+    # Tenta encontrar SDL2.dll automaticamente
+    get_target_property(SDL2_LOCATION SDL2::SDL2 IMPORTED_LOCATION_RELEASE)
+    if(NOT SDL2_LOCATION)
+        get_target_property(SDL2_LOCATION SDL2::SDL2 IMPORTED_LOCATION)
+    endif()
+    
+    if(SDL2_LOCATION AND EXISTS "${SDL2_LOCATION}")
+        add_custom_command(TARGET space-kid POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                "${SDL2_LOCATION}"
+                $<TARGET_FILE_DIR:space-kid>
+        )
+    endif()
+endif()
