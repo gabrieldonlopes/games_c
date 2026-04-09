@@ -19,7 +19,8 @@ int checkCollision(SDL_Rect *a, SDL_Rect *b){
             a->y + a->h > b->y);
 }
 
-void collisionPlatX(player_s *player, Plataform plats[MAX_PLATFORMS], int count, int screen) {
+void collisionPlatX(player_s *player, Plataform plats[MAX_PLATFORMS], 
+                    int count, int screen,SDL_Window *window, int *running) {
     for (int i = 0; i < count; i++) {
         
         // checagem de plataformas na tela atual
@@ -28,10 +29,13 @@ void collisionPlatX(player_s *player, Plataform plats[MAX_PLATFORMS], int count,
         }
 
         if (checkCollision(&player->rect, &plats[i].rect)) {
-
             if (player->vx > 0) { // indo pra direita
+                checkDeathByPlataform(window, running, plats[i]);
+
                 player->x = plats[i].rect.x - player->rect.w;
             } else if (player->vx < 0) { // indo pra esquerda
+                checkDeathByPlataform(window, running, plats[i]);
+
                 player->x = plats[i].rect.x + plats[i].rect.w;
             }
 
@@ -41,7 +45,8 @@ void collisionPlatX(player_s *player, Plataform plats[MAX_PLATFORMS], int count,
     }
 }
 
-void collisionPlatY(player_s *player, Plataform plats[MAX_PLATFORMS], int count, int screen) {
+void collisionPlatY(player_s *player, Plataform plats[MAX_PLATFORMS], 
+                    int count, int screen,SDL_Window *window, int *running) {
     for (int i = 0; i < count; i++) {
         
         // checagem de plataformas na tela atual
@@ -52,11 +57,13 @@ void collisionPlatY(player_s *player, Plataform plats[MAX_PLATFORMS], int count,
         if (checkCollision(&player->rect, &plats[i].rect)) {
 
             if (player->vy > 0) { // descendo
-                player->y = plats[i].rect.y - player->rect.h;
+                checkDeathByPlataform(window, running, plats[i]);
 
-                player->fuel = FUEL; // caso o player toque no chão o fuel recarrega
-                
+                player->y = plats[i].rect.y - player->rect.h;
+                player->fuel = FUEL; // caso o player toque no chão o fuel recarrega                
             } else if (player->vy < 0) { // subindo
+                checkDeathByPlataform(window, running, plats[i]);
+
                 player->y = plats[i].rect.y + plats[i].rect.h;
             }
 
@@ -66,7 +73,8 @@ void collisionPlatY(player_s *player, Plataform plats[MAX_PLATFORMS], int count,
     }
 }
 
-int updatePlayerPosition(player_s *player, float delta, input *input_k,Plataform plats[MAX_PLATFORMS], int count,int screen){
+int updatePlayerPosition(player_s *player, float delta, input *input_k,Plataform plats[MAX_PLATFORMS], 
+                         int count,int screen,SDL_Window *window, int *running){
     player->vy += GRAVITY * delta;
     
     if (*input_k == RIGHT)
@@ -90,12 +98,12 @@ int updatePlayerPosition(player_s *player, float delta, input *input_k,Plataform
     player->x += player->vx * delta;
     player->rect.x = player->x;
 
-    collisionPlatX(player, plats, count,screen);
+    collisionPlatX(player, plats, count,screen,window,running);
 
     player->y += player->vy * delta;
     player->rect.y = player->y;
 
-    collisionPlatY(player, plats, count,screen);
+    collisionPlatY(player, plats, count,screen,window,running);
 
     return 0;
 }

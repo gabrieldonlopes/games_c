@@ -18,36 +18,44 @@ void initPlataforms(Plataform plat[MAX_PLATFORMS]){
 
     // a
     plat[i].rect = (SDL_Rect){0, HEIGHT - 100, 200, 100};
+    plat[i].type = GROUND;
     plat[i++].screen = 0;
 
     // b
     plat[i].rect = (SDL_Rect){250, HEIGHT - 100, 100, 100};
+    plat[i].type = GROUND;
     plat[i++].screen = 0;
     
     // c
     plat[i].rect = (SDL_Rect){400, HEIGHT - 200, 200, 200};
+    plat[i].type = GROUND;
     plat[i++].screen = 0;
 
     // screen 2
 
     // d 
     plat[i].rect = (SDL_Rect){0, HEIGHT - 200, 100, 200};
+    plat[i].type = GROUND;
     plat[i++].screen = WIDTH;
 
     // e
     plat[i].rect = (SDL_Rect){200, HEIGHT - 80, 50, 80};
+    plat[i].type = GROUND;
     plat[i++].screen = WIDTH;
 
     // f
-    plat[i].rect = (SDL_Rect){300, HEIGHT - 270, 50, 270};
+    plat[i].rect = (SDL_Rect){300, HEIGHT - 250, 50, 250};
+    plat[i].type = DAMAGE;
     plat[i++].screen = WIDTH;
 
     // g
-    plat[i].rect = (SDL_Rect){300, 0, 50, 270};
+    plat[i].rect = (SDL_Rect){300, 0, 50, 250};
+    plat[i].type = DAMAGE;
     plat[i++].screen = WIDTH;
 
     // l
     plat[i].rect = (SDL_Rect){400, HEIGHT - 200, 200, 200};
+    plat[i].type = GROUND;
     plat[i++].screen = WIDTH;
 }
 

@@ -14,9 +14,18 @@ typedef enum
     
 } input;
 
-typedef struct{
+typedef enum
+{
+    MOVABLE,
+    DAMAGE,
+    GROUND,
+} Plataform_type;
+
+typedef struct
+{
     SDL_Rect rect;
     int screen;
+    Plataform_type type;
 } Plataform;
 
 typedef struct{
@@ -31,5 +40,6 @@ typedef struct{
 
 void changeScreen(player_s *player, int *screen);
 void checkDeathByFall(player_s *player, int *running, SDL_Window *window);
+void checkDeathByPlataform(SDL_Window *window, int *running, Plataform plats);
 
 #endif

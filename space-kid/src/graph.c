@@ -12,7 +12,9 @@
 */
 
 const int background_color[3] = {3, 9, 43};
-const int ground_color[3] = {79, 62, 33};
+const int ground_color[3][3] = {{79, 62, 33}, // GROUND
+                                {189, 28, 17}, // DAMAGE
+                                {79, 62, 33}}; // MOVABLE
 const int player_color[3] = {7, 82, 3};
 
 int setupWindow(SDL_Window** window,SDL_Renderer** renderer){
@@ -62,17 +64,33 @@ void drawBackground(SDL_Renderer *renderer){
 }
 
 void drawGround(SDL_Renderer *renderer, Plataform plat[MAX_PLATFORMS],int screen){
-  
-    SDL_SetRenderDrawColor(renderer,
-        ground_color[0], 
-        ground_color[1],
-        ground_color[2],
-        255
-    );
-
     for (int i = 0; i < MAX_PLATFORMS;i++)
     {
         if(plat[i].screen == screen){ // renderizando apenas plataformas que estão na tela atual
+            
+            if (plat[i].type == GROUND){
+                SDL_SetRenderDrawColor(renderer,
+                    ground_color[0][0], 
+                    ground_color[0][1],
+                    ground_color[0][2],
+                    255
+                );
+            } else if (plat[i].type == DAMAGE){
+                SDL_SetRenderDrawColor(renderer,
+                    ground_color[1][0], 
+                    ground_color[1][1],
+                    ground_color[1][2],
+                    255
+                );
+            } else if (plat[i].type == MOVABLE){
+                SDL_SetRenderDrawColor(renderer,
+                    ground_color[2][0], 
+                    ground_color[2][1],
+                    ground_color[2][2],
+                    255
+                );
+            }
+            
             SDL_RenderFillRect(renderer, &plat[i].rect);
         }
     }
@@ -81,7 +99,6 @@ void drawGround(SDL_Renderer *renderer, Plataform plat[MAX_PLATFORMS],int screen
 void drawPlayer(SDL_Renderer *renderer, player_s *player){
     int player_size = 50;
     
-
     SDL_SetRenderDrawColor(renderer,
         player_color[0],
         player_color[1],

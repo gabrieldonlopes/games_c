@@ -43,3 +43,15 @@ void checkDeathByFall(player_s *player, int *running,SDL_Window *window){
         *running = 0;
     }
 }
+
+void checkDeathByPlataform(SDL_Window *window, int *running, Plataform plats){
+    if (plats.type == DAMAGE){
+        SDL_ShowSimpleMessageBox(
+            SDL_MESSAGEBOX_INFORMATION,
+                "Se fudeu",
+                "Bateu na parede errada!",
+                window
+            );
+        *running = 0;
+    }
+} 
