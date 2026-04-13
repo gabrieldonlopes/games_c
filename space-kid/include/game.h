@@ -31,6 +31,8 @@ typedef struct {
 
 typedef struct
 {
+    float x, y;
+    
     SDL_Rect rect;
     int screen;
     Plataform_type type;

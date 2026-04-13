@@ -92,36 +92,38 @@ int updatePlayerPosition(player_s *player, float delta, input *input_k,Plataform
     return 0;
 }
 
-void updatePlatformPosition(Plataform plats[MAX_PLATFORMS],float delta){
-    for (int i = 0; i < MAX_PLATFORMS;i++){
+void updatePlatformPosition(Plataform plats[MAX_PLATFORMS], float delta){
+    for (int i = 0; i < MAX_PLATFORMS; i++){
         if (plats[i].type != MOVABLE) continue;
 
-        plats[i].rect.x += plats[i].mov.vx * delta;
-        plats[i].rect.y += plats[i].mov.vy * delta;
+        plats[i].x += plats[i].mov.vx * delta;
+        plats[i].y += plats[i].mov.vy * delta;
 
-        if (plats[i].mov.x1 != -1 && plats[i].mov.x2 != -1){
-            if (plats[i].rect.x <= plats[i].mov.x1) {
-                plats[i].rect.x = plats[i].mov.x1;
+        if(plats[i].mov.x1 != -1 && plats[i].mov.x2 != -1){
+            if (plats[i].x <= plats[i].mov.x1) {
+                plats[i].x = plats[i].mov.x1;
                 plats[i].mov.vx *= -1;
             }
 
-            if (plats[i].rect.x + plats[i].rect.w >= plats[i].mov.x2) {
-                plats[i].rect.x = plats[i].mov.x2 - plats[i].rect.w;
+            if (plats[i].x + plats[i].rect.w >= plats[i].mov.x2) {
+                plats[i].x = plats[i].mov.x2 - plats[i].rect.w;
                 plats[i].mov.vx *= -1;
-            }
+            }   
         }
-        
-        if (plats[i].mov.y1 != -1 && plats[i].mov.y2 != -1){
 
-            if (plats[i].rect.y <= plats[i].mov.y1) {
-                plats[i].rect.y = plats[i].mov.y1;
+        if(plats[i].mov.y1 != -1 && plats[i].mov.y2 != -1){
+            if (plats[i].y <= plats[i].mov.y1) {
+                plats[i].y = plats[i].mov.y1;
                 plats[i].mov.vy *= -1;
             }
 
-            if (plats[i].rect.y + plats[i].rect.h >= plats[i].mov.y2) {
-                plats[i].rect.y = plats[i].mov.y2 - plats[i].rect.h;
+            if (plats[i].y + plats[i].rect.h >= plats[i].mov.y2) {
+                plats[i].y = plats[i].mov.y2 - plats[i].rect.h;
                 plats[i].mov.vy *= -1;
             }
         }
+
+        plats[i].rect.x = (int)plats[i].x;
+        plats[i].rect.y = (int)plats[i].y;
     }
 }

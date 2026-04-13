@@ -17,46 +17,61 @@ void initPlataforms(Plataform plat[MAX_PLATFORMS]){
     // screen 1
 
     // a
-    plat[i].rect = (SDL_Rect){0, HEIGHT - 100, 200, 100};
+    plat[i].x = 0;
+    plat[i].y = HEIGHT - 100;
+    plat[i].rect = (SDL_Rect){(int)plat[i].x, (int)plat[i].y, 200, 100};
     plat[i].type = GROUND;
     plat[i++].screen = 0;
 
     // b
-    plat[i].rect = (SDL_Rect){250, HEIGHT - 100, 100, 100};
+    plat[i].x = 250;
+    plat[i].y = HEIGHT - 100;
+    plat[i].rect = (SDL_Rect){(int)plat[i].x, (int)plat[i].y, 100, 100};
     plat[i].type = GROUND;
     plat[i++].screen = 0;
-    
+
     // c
-    plat[i].rect = (SDL_Rect){400, HEIGHT - 200, 200, 200};
+    plat[i].x = 400;
+    plat[i].y = HEIGHT - 200;
+    plat[i].rect = (SDL_Rect){(int)plat[i].x, (int)plat[i].y, 200, 200};
     plat[i].type = GROUND;
     plat[i++].screen = 0;
 
     // screen 2
 
-    // d 
-    plat[i].rect = (SDL_Rect){0, HEIGHT - 200, 100, 200};
+    // d
+    plat[i].x = 0;
+    plat[i].y = HEIGHT - 200;
+    plat[i].rect = (SDL_Rect){(int)plat[i].x, (int)plat[i].y, 100, 200};
     plat[i].type = GROUND;
     plat[i++].screen = WIDTH;
 
-    // e
-    plat[i].rect = (SDL_Rect){200, HEIGHT - 80, 50, 80};
+    // e (movable)
+    plat[i].x = 150;
+    plat[i].y = HEIGHT - 80;
+    plat[i].rect = (SDL_Rect){(int)plat[i].x, (int)plat[i].y, 100, 80};
     plat[i].type = MOVABLE;
-    plat[i].mov = (Plataform_mov){0, 20, -1, HEIGHT - 260, -1, HEIGHT};
+    plat[i].mov = (Plataform_mov){0, 100, -1, HEIGHT - 260, -1, HEIGHT};
     plat[i++].screen = WIDTH;
 
     // f
-    plat[i].rect = (SDL_Rect){300, HEIGHT - 250, 50, 250};
+    plat[i].x = 300;
+    plat[i].y = HEIGHT - 250;
+    plat[i].rect = (SDL_Rect){(int)plat[i].x, (int)plat[i].y, 50, 250};
     plat[i].type = DAMAGE;
     plat[i++].screen = WIDTH;
 
     // g
-    plat[i].rect = (SDL_Rect){300, 0, 50, 250};
+    plat[i].x = 300;
+    plat[i].y = 0;
+    plat[i].rect = (SDL_Rect){(int)plat[i].x, (int)plat[i].y, 50, 250};
     plat[i].type = DAMAGE;
     plat[i++].screen = WIDTH;
 
     // l
-    plat[i].rect = (SDL_Rect){400, HEIGHT - 200, 200, 200};
+    plat[i].x = 400;
+    plat[i].y = HEIGHT - 200;
+    plat[i].rect = (SDL_Rect){(int)plat[i].x, (int)plat[i].y, 200, 200};
     plat[i].type = GROUND;
     plat[i++].screen = WIDTH;
 }
-
