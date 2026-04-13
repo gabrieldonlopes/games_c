@@ -1,6 +1,6 @@
 #include "graph.h"
-#include "physics.h"
 #include "game.h"
+#include "physics.h"
 #include "defs.h"
 
 /* 
@@ -145,6 +145,7 @@ void updateGame(){
     last = now;
 
     updatePlayerPosition(&player, delta,&input_k,plat,MAX_PLATFORMS,screen,window,&running);
-    checkDeathByFall(&player, &running,window);
+    updatePlatformPosition(plat,delta);
+    checkDeathByFall(&player, &running, window);
     changeScreen(&player, &screen);
 }

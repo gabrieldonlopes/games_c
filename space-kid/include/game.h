@@ -21,11 +21,20 @@ typedef enum
     GROUND,
 } Plataform_type;
 
+typedef struct {
+    int vx, vy;
+
+    // limites de movimento
+    int x1, y1;
+    int x2, y2;
+} Plataform_mov;
+
 typedef struct
 {
     SDL_Rect rect;
     int screen;
     Plataform_type type;
+    Plataform_mov mov;
 } Plataform;
 
 typedef struct{
@@ -41,5 +50,7 @@ typedef struct{
 void changeScreen(player_s *player, int *screen);
 void checkDeathByFall(player_s *player, int *running, SDL_Window *window);
 void checkDeathByPlataform(SDL_Window *window, int *running, Plataform plats);
+int updatePlayerPosition(player_s *player, float delta, input *input_k, Plataform plats[MAX_PLATFORMS], int count,int screen,SDL_Window *window, int *running);
+void updatePlatformPosition(Plataform plats[MAX_PLATFORMS], float delta);
 
 #endif

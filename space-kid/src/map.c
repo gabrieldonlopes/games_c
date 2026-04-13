@@ -40,7 +40,8 @@ void initPlataforms(Plataform plat[MAX_PLATFORMS]){
 
     // e
     plat[i].rect = (SDL_Rect){200, HEIGHT - 80, 50, 80};
-    plat[i].type = GROUND;
+    plat[i].type = MOVABLE;
+    plat[i].mov = (Plataform_mov){0, 20, -1, HEIGHT - 260, -1, HEIGHT};
     plat[i++].screen = WIDTH;
 
     // f

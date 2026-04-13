@@ -14,7 +14,7 @@
 const int background_color[3] = {3, 9, 43};
 const int ground_color[3][3] = {{79, 62, 33}, // GROUND
                                 {189, 28, 17}, // DAMAGE
-                                {79, 62, 33}}; // MOVABLE
+                                {0, 255, 229}}; // MOVABLE
 const int player_color[3] = {7, 82, 3};
 
 int setupWindow(SDL_Window** window,SDL_Renderer** renderer){

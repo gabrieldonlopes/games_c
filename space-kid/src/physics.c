@@ -1,5 +1,4 @@
 #include "physics.h"
-#include "game.h"
 
 /* 
 --------------------------------------------------------
@@ -71,39 +70,4 @@ void collisionPlatY(player_s *player, Plataform plats[MAX_PLATFORMS],
             player->rect.y = player->y;
         }
     }
-}
-
-int updatePlayerPosition(player_s *player, float delta, input *input_k,Plataform plats[MAX_PLATFORMS], 
-                         int count,int screen,SDL_Window *window, int *running){
-    player->vy += GRAVITY * delta;
-    
-    if (*input_k == RIGHT)
-        player->vx = 200;
-    else if (*input_k == LEFT)
-        player->vx = -200;
-    else if (*input_k == UP && player->fuel > 0){ // só sobe caso tenha combustível
-        player->vy = -210 ; 
-        player->fuel -= 100 * delta;  // consumo por segundo
-    }
-    else if (*input_k == NONE)
-    {
-        if (player->vx < 0)
-            player->vx += 10;
-        else if (player->vx > 0)
-            player->vx -= 10;
-        else
-            player->vx = 0;
-    }
-
-    player->x += player->vx * delta;
-    player->rect.x = player->x;
-
-    collisionPlatX(player, plats, count,screen,window,running);
-
-    player->y += player->vy * delta;
-    player->rect.y = player->y;
-
-    collisionPlatY(player, plats, count,screen,window,running);
-
-    return 0;
 }
