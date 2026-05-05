@@ -71,23 +71,30 @@ int updatePlayerPosition(player_s *player, float delta, input *input_k,Plataform
     }
     else if (*input_k == NONE)
     {
-        if (player->vx < 0)
+        // força de atrito
+        if (player->vx < 0) {
             player->vx += 10;
-        else if (player->vx > 0)
+            if (player->vx > 0) player->vx = 0;
+        } else if (player->vx > 0) {
             player->vx -= 10;
-        else
-            player->vx = 0;
+            if (player->vx < 0) player->vx = 0;
+        }
     }
 
+    // IMPORTANTE: Primeiro move em X e resolve colisão
     player->x += player->vx * delta;
-    player->rect.x = player->x;
-
-    collisionPlatX(player, plats, count,screen,window,running);
-
+    player->rect.x = (int)player->x;
+    
+    // Move em Y e resolve colisão
     player->y += player->vy * delta;
-    player->rect.y = player->y;
-
-    collisionPlatY(player, plats, count,screen,window,running);
+    player->rect.y = (int)player->y;
+    
+    // Resolve colisões em ambos os eixos de uma vez
+    handlePlatformCollision(player, plats, count, screen, window, running);
+    
+    // Garantir que o rect está sincronizado após todas as correções
+    player->rect.x = (int)player->x;
+    player->rect.y = (int)player->y;
 
     return 0;
 }

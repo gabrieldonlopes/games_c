@@ -22,6 +22,7 @@ target_include_directories(space-kid PRIVATE
 
 target_link_libraries(space-kid
     ${SDL2_LIBRARIES}
+    m
 )
 
 # Apenas copia DLL no Windows se existir

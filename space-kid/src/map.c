@@ -58,7 +58,8 @@ void initPlataforms(Plataform plat[MAX_PLATFORMS]){
     plat[i].x = 300;
     plat[i].y = HEIGHT - 250;
     plat[i].rect = (SDL_Rect){(int)plat[i].x, (int)plat[i].y, 50, 250};
-    plat[i].type = DAMAGE;
+    //plat[i].type = DAMAGE;
+    plat[i].type = GROUND;
     plat[i++].screen = WIDTH;
 
     // g
