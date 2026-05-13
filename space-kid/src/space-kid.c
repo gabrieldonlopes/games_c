@@ -76,7 +76,7 @@ int main (int argc, char *argv[]){
         handleInput();
         updateGame();
         render();
-
+        // printf("%d\n",player.on_ground);
         frameTime = SDL_GetTicks() - frameStart;
         if(frameTime < 16){
             SDL_Delay(16 - frameTime); // ~60 FPS
@@ -143,9 +143,14 @@ void updateGame(){
     Uint32 now = SDL_GetTicks();
     delta = (now - last) / 1000.0f;
     last = now;
-
-    updatePlayerPosition(&player, delta,&input_k,plat,MAX_PLATFORMS,screen,window,&running);
-    updatePlatformPosition(plat,delta);
+    
+    // 1º: Atualiza posição das plataformas (calcula movimento do frame)
+    updatePlatformPosition(plat, delta);
+    
+    // 2º: Atualiza jogador (agora as plataformas já estão na posição correta)
+    updatePlayerPosition(&player, delta, &input_k, plat, MAX_PLATFORMS, screen, window, &running);
+    
+    // 3º: Verificações
     checkDeathByFall(&player, &running, window);
     changeScreen(&player, &screen);
 }

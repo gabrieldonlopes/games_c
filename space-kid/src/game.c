@@ -57,51 +57,70 @@ void checkDeathByPlataform(SDL_Window *window, int *running, Plataform plats){
     }
 } 
 
-int updatePlayerPosition(player_s *player, float delta, input *input_k,Plataform plats[MAX_PLATFORMS], 
-                         int count,int screen,SDL_Window *window, int *running){
+int updatePlayerPosition(player_s *player, float delta, input *input_k, Plataform plats[MAX_PLATFORMS], 
+                         int count, int screen, SDL_Window *window, int *running) {
+    
+    // Aplica gravidade
     player->vy += GRAVITY * delta;
     
+    // Aplica input
     if (*input_k == RIGHT)
         player->vx = 200;
     else if (*input_k == LEFT)
         player->vx = -200;
-    else if (*input_k == UP && player->fuel > 0){ // só sobe caso tenha combustível
-        player->vy = -210 ; 
-        player->fuel -= 100 * delta;  // consumo por segundo
+    else if (*input_k == UP && player->fuel > 0) {
+        player->vy = -210; 
+        player->fuel -= 100 * delta;
+        if (player->fuel < 0) player->fuel = 0;
+        
+        // Ao pular, desgruda da plataforma
+        player->current_platform = NULL;
+        player->on_ground = 0;
     }
-    else if (*input_k == NONE)
-    {
-        // força de atrito
-        if (player->vx < 0) {
-            player->vx += 10;
-            if (player->vx > 0) player->vx = 0;
-        } else if (player->vx > 0) {
-            player->vx -= 10;
+    else if (*input_k == NONE) {
+        // Atrito com delta time
+        float decel = 200.0f;
+        if (player->vx > 0) {
+            player->vx -= decel * delta;
             if (player->vx < 0) player->vx = 0;
+        } else if (player->vx < 0) {
+            player->vx += decel * delta;
+            if (player->vx > 0) player->vx = 0;
         }
     }
-
-    // IMPORTANTE: Primeiro move em X e resolve colisão
+    
+    // Guarda posição antiga para resolver colisões
+    float old_x = player->x;
+    float old_y = player->y;
+    
+    // Aplica movimento
     player->x += player->vx * delta;
-    player->rect.x = (int)player->x;
-    
-    // Move em Y e resolve colisão
     player->y += player->vy * delta;
-    player->rect.y = (int)player->y;
     
-    // Resolve colisões em ambos os eixos de uma vez
+    // Atualiza rect para colisão
+    player->rect.x = (int)roundf(player->x);
+    player->rect.y = (int)roundf(player->y);
+    
+    // Resolve colisões
     handlePlatformCollision(player, plats, count, screen, window, running);
     
-    // Garantir que o rect está sincronizado após todas as correções
-    player->rect.x = (int)player->x;
-    player->rect.y = (int)player->y;
-
+    // Se o jogador está em uma plataforma e ela se moveu, ajusta a posição
+    if (player->current_platform && player->on_ground) {
+        // A posição já deve estar correta por causa da ordem de atualização
+        // Mas garantimos que o rect está sincronizado
+        player->rect.x = (int)roundf(player->x);
+        player->rect.y = (int)roundf(player->y);
+    }
+    
     return 0;
 }
 
 void updatePlatformPosition(Plataform plats[MAX_PLATFORMS], float delta){
     for (int i = 0; i < MAX_PLATFORMS; i++){
         if (plats[i].type != MOVABLE) continue;
+
+        plats[i].mov.last_x = plats[i].x;
+        plats[i].mov.last_y = plats[i].y;
 
         plats[i].x += plats[i].mov.vx * delta;
         plats[i].y += plats[i].mov.vy * delta;

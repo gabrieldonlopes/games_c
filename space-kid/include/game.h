@@ -22,7 +22,8 @@ typedef enum
 } Plataform_type;
 
 typedef struct {
-    int vx, vy;
+    float last_x, last_y;
+    float vx, vy;
 
     // limites de movimento
     int x1, y1;
@@ -44,6 +45,7 @@ typedef struct{
     float vx, vy;
 
     SDL_Rect rect;
+    Plataform *current_platform;
 
     int on_ground;
     int fuel;
