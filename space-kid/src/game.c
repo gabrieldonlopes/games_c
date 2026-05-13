@@ -78,14 +78,13 @@ int updatePlayerPosition(player_s *player, float delta, input *input_k, Platafor
         player->on_ground = 0;
     }
     else if (*input_k == NONE) {
-        // Atrito com delta time
-        float decel = 200.0f;
-        if (player->vx > 0) {
-            player->vx -= decel * delta;
-            if (player->vx < 0) player->vx = 0;
-        } else if (player->vx < 0) {
-            player->vx += decel * delta;
+        // força de atrito
+        if (player->vx < 0) {
+            player->vx += 10;
             if (player->vx > 0) player->vx = 0;
+        } else if (player->vx > 0) {
+            player->vx -= 10;
+            if (player->vx < 0) player->vx = 0;
         }
     }
     
