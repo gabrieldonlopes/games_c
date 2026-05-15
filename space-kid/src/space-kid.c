@@ -16,7 +16,7 @@
 
 SDL_Window *window = NULL; // janela base
 SDL_Renderer *renderer = NULL; // renderizador base
-SDL_Event event;
+SDL_Event event; // listener para eventos
 
 Uint32 last;
 int running = 1;
@@ -33,7 +33,7 @@ int frameTime;
     não entendo totalmente a diferença que existe entre essas duas abordagens, por isso 
     estou usando a mais simples
 
-    o padrão que seguirei adiante é usar 
+    o padrão que seguirei adiante é usar 1
 */
 
 player_s player;
@@ -43,7 +43,7 @@ Plataform plat [MAX_PLATFORMS]; // buffer contínuo que guarda todas plataformas
 
 /*
     nota: como vou implementar um número prefixado de plataformas (vale pensar no futuro criar um gerador de 
-    mapas automaticos tmb) posso guardar o endereço inicio das plataformas de determinada tela
+    mapas automaticos tmb posso guardar o endereço inicio das plataformas de determinada tela
 */
 
 // representa a tela, cada plataforma está mapeada para uma tela diferente
@@ -144,13 +144,11 @@ void updateGame(){
     delta = (now - last) / 1000.0f;
     last = now;
     
-    // 1º: Atualiza posição das plataformas (calcula movimento do frame)
+    // atualizando posições de objetos que se movimentam
     updatePlatformPosition(plat, delta);
-    
-    // 2º: Atualiza jogador (agora as plataformas já estão na posição correta)
     updatePlayerPosition(&player, delta, &input_k, plat, MAX_PLATFORMS, screen, window, &running);
     
-    // 3º: Verificações
+    // verificacoes
     checkDeathByFall(&player, &running, window);
     changeScreen(&player, &screen);
 }

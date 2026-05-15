@@ -97,7 +97,6 @@ void drawGround(SDL_Renderer *renderer, Plataform plat[MAX_PLATFORMS],int screen
 }
 
 void drawPlayer(SDL_Renderer *renderer, player_s *player){
-    int player_size = 50;
     
     SDL_SetRenderDrawColor(renderer,
         player_color[0],
@@ -109,8 +108,8 @@ void drawPlayer(SDL_Renderer *renderer, player_s *player){
     SDL_Rect player_rect = {
         player->x,
         player->y, 
-        player_size / 2, 
-        player_size};
+        PLAYER_SIZE / 2, 
+        PLAYER_SIZE};
 
     player->rect = player_rect;
     SDL_RenderFillRect(renderer, &player_rect);
@@ -118,7 +117,8 @@ void drawPlayer(SDL_Renderer *renderer, player_s *player){
 
 void drawFire(SDL_Renderer *renderer, player_s *player){
     if(player->vy >= 0) return; // só quando estiver subindo e no ar
-    if(player->on_ground) return;
+    if(player->on_ground) return; // só quando não estiver no chão
+
     int player_base = player->rect.y + player->rect.h;
     int center_x = player->rect.x + player->rect.w / 2;
 

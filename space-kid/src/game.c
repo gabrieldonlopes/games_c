@@ -114,6 +114,7 @@ int updatePlayerPosition(player_s *player, float delta, input *input_k, Platafor
     return 0;
 }
 
+// todo: comentar essa porra, codigo macarronico do caralho
 void updatePlatformPosition(Plataform plats[MAX_PLATFORMS], float delta){
     for (int i = 0; i < MAX_PLATFORMS; i++){
         if (plats[i].type != MOVABLE) continue;

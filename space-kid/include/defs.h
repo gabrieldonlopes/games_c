@@ -9,4 +9,6 @@
 
 #define GRAVITY 500
 #define FUEL 100
+#define PLAYER_SIZE 50
+
 #endif
