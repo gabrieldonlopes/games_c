@@ -12,7 +12,7 @@
 
 int checkCollision(SDL_Rect *a, SDL_Rect *b)
 {
-    int epsilon = 4;
+    int epsilon = 2;
 
     return (
         a->x <= b->x + b->w &&

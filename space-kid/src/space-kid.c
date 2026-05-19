@@ -66,7 +66,7 @@ int main (int argc, char *argv[]){
     player.y = HEIGHT / 2;
     player.fuel = FUEL;
 
-    screen = 0;
+    screen = WIDTH*2;
 
     last = SDL_GetTicks();
     while(running){

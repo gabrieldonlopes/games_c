@@ -16,6 +16,12 @@ typedef enum
 
 typedef enum
 {
+    BULLET,
+    MONSTER
+} Entity_type;
+
+typedef enum
+{
     MOVABLE,
     DAMAGE,
     GROUND,
@@ -50,6 +56,16 @@ typedef struct{
     int on_ground;
     int fuel;
 } player_s;
+
+typedef struct{
+    int x, y;
+    float vx, vy;
+
+    int screen;
+    SDL_Rect rect;
+
+    Entity_type type;
+} entity;
 
 void changeScreen(player_s *player, int *screen);
 void checkDeathByFall(player_s *player, int *running, SDL_Window *window);
